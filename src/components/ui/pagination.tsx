@@ -128,6 +128,8 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   baseUrl,
+  pageSize = 10,
+  pageSizeOptions = [10, 20, 50],
 }) => {
   const getPageUrl = (page: number) => {
     if (page === 1) return baseUrl
@@ -206,6 +208,8 @@ interface PaginationProps {
   currentPage: number
   totalPages: number
   baseUrl: string
+  pageSize?: number
+  pageSizeOptions?: number[]
 }
 
 export default PaginationComponent
