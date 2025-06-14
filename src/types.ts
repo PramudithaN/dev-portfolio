@@ -5,6 +5,7 @@ export type Site = {
   author: string
   locale: string
   location: string
+  buttonText: string
 }
 
 export type SocialLink = {

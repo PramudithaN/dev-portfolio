@@ -229,9 +229,9 @@ const Navbar = () => {
                 className="mt-auto flex flex-col items-center gap-6"
               >
                 <div className="flex flex-wrap items-center justify-center gap-x-2 text-center">
-                  <span className="text-muted-foreground text-sm" aria-label="copyright">
-                    2020 - {new Date().getFullYear()} &copy; All rights reserved.
-                  </span>
+                  {/* <span className="text-muted-foreground text-sm" aria-label="copyright">
+                    2025 - {new Date().getFullYear()} &copy; All rights reserved.
+                  </span> */}
                   {/* <Separator orientation="vertical" className="hidden h-4! sm:block" />
                   <p className="text-muted-foreground text-sm" aria-label="open-source description">
                     <Link
