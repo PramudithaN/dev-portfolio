@@ -12,6 +12,9 @@ import { FaGithub } from 'react-icons/fa'
 
 const blog = await getRecentPosts(3)
 const currentUrl = Astro.url;
+ const username = 'PramudithaN';
+        const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+        const repos = await res.json();
 ---
 
 <Layout canonicalUrl={currentUrl}>
@@ -63,6 +66,7 @@ const currentUrl = Astro.url;
       </div>
     </div>
 
+    <!-- Skills -->
     <section class="relative" aria-labelledby="skills-title">
       <h2
         id="skills-title"
@@ -81,6 +85,7 @@ const currentUrl = Astro.url;
       </div>
     </section>
 
+    <!-- Experience -->
     <section class="relative" aria-labelledby="experience-title">
       <h2
         id="experience-title"
@@ -173,151 +178,93 @@ const currentUrl = Astro.url;
       </div>
     </section>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Project Card: CV Matching System -->
-      <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
-      <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
-        <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
-        CV Matching System
-        <a href="https://github.com/yourusername/cv-matching-system" target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
-          <FaGithub />
-        </a>
-      </h3>
-      <p class="text-muted-foreground text-sm mb-4">
-        A proprietary code AI-driven CV matching system to connect the offer and the best candidates. Automates the recruitment process.
+    <!-- Projects -->
+    <section class="relative" aria-labelledby="projects-title">
+      <h2
+      id="projects-title"
+      class="font-custom text-foreground text-2xl font-bold mb-2"
+      title="projects"
+      aria-label="projects"
+      role="heading"
+      >
+      Projects
+      </h2>
+      <p class="text-muted-foreground text-sm mb-6" aria-label="projects description">
+      Here are some of my public GitHub repositories.
       </p>
-      <ul class="mb-4 space-y-1 text-sm">
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-target text-pink-400"></span>
-        <span class="bg-pink-900/40 text-pink-200 rounded px-2 py-0.5">Tailored job opportunities</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-sparkles text-yellow-400"></span>
-        <span>AI-driven complex workflows</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-rocket text-purple-400"></span>
-        <span>80% increase in productivity</span>
-        </li>
-      </ul>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-python"></span> Python</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-redis"></span> Redis</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-firebase"></span> Firebase</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-googlecloud"></span> Google Cloud</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">Claude</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">Groq</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        Array.isArray(repos) && repos.slice(0, 4).map(repo => (
+        <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
+          <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
+          {repo.name}
+          <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
+            <FaGithub />
+          </a>
+          </h3>
+          <p class="text-muted-foreground text-sm mb-4">
+          {repo.description || 'No description provided.'}
+          </p>
+          <ul class="mb-4 space-y-1 text-sm">
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-star text-yellow-400"></span>
+            <span>{repo.stargazers_count} stars</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-git-branch text-green-400"></span>
+            <span>{repo.forks_count} forks</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-clock text-blue-400"></span>
+            <span>Updated {new Date(repo.updated_at).toLocaleDateString()}</span>
+          </li>
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-2">
+          {repo.language && (
+            <span
+            class={`rounded px-2 py-0.5 text-xs font-medium flex items-center gap-1
+              ${
+              ({
+                JavaScript: 'bg-yellow-900/40 text-yellow-200',
+                TypeScript: 'bg-blue-900/40 text-blue-200',
+                Python: 'bg-blue-900/40 text-blue-200',
+                Java: 'bg-orange-900/40 text-orange-200',
+                HTML: 'bg-orange-900/40 text-orange-200',
+                CSS: 'bg-indigo-900/40 text-indigo-200',
+                Shell: 'bg-green-900/40 text-green-200',
+                C: 'bg-gray-900/40 text-gray-200',
+                'C++': 'bg-pink-900/40 text-pink-200',
+                PHP: 'bg-indigo-900/40 text-indigo-200',
+                Ruby: 'bg-red-900/40 text-red-200',
+                Go: 'bg-cyan-900/40 text-cyan-200',
+                Rust: 'bg-orange-900/40 text-orange-200',
+                Dart: 'bg-teal-900/40 text-teal-200',
+                Swift: 'bg-orange-900/40 text-orange-200',
+                Kotlin: 'bg-purple-900/40 text-purple-200',
+              } as Record<string, string>)[String(repo.language)] || 'bg-muted text-foreground'
+              }
+            `}
+            >
+            {repo.language}
+            </span>
+          )}
+          </div>
+          {repo.topics && repo.topics.map((topic: string) => (
+          <span class="bg-muted px-2 py-0.5 rounded text-xs">{topic}</span>
+          ))}
+        </div>
+        ))
+      }
       </div>
-      </div>
-
-      <!-- Project Card: TODO List -->
-      <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
-      <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
-        <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
-        TODO List
-        <a href="https://github.com/yourusername/cv-matching-system" target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
-          <FaGithub />
-        </a>
-      </h3>
-      <p class="text-muted-foreground text-sm mb-4">
-        A simple app to showcase my skills in Angular. It's a TODO list with a beautiful and smooth UI, good user experience and best practices. Not finished yet.
-      </p>
-      <ul class="mb-4 space-y-1 text-sm">
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-hourglass text-orange-400"></span>
-        <span>In progress</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-layers text-blue-400"></span>
-        <span>Made-from-scratch complex components</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-smile text-yellow-400"></span>
-        <span>Beautiful and smooth UI, good user experience</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-server text-purple-400"></span>
-        <span>Server Side Rendering</span>
-        </li>
-      </ul>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-angular"></span> Angular</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">RxJS</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">TypeScript</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">SCSS</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">NodeJS</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-firebase"></span> Firebase</span>
-      </div>
-      </div>
-      
-      <!-- Project Card: Portfolio Website -->
-      <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
-      <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
-        <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
-        Portfolio Website
-        <a href="https://github.com/yourusername/cv-matching-system" target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
-          <FaGithub />
-        </a>
-      </h3>
-      <p class="text-muted-foreground text-sm mb-4">
-        My personal portfolio website built with Astro and React. Showcases my projects, skills, and blog posts with a modern, responsive design.
-      </p>
-      <ul class="mb-4 space-y-1 text-sm">
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-layout-dashboard text-blue-400"></span>
-        <span>Fully responsive and accessible</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-code text-green-400"></span>
-        <span>Astro Islands architecture</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-sparkles text-yellow-400"></span>
-        <span>Animated UI and dark mode</span>
-        </li>
-      </ul>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-astro"></span> Astro</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-react"></span> React</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">TypeScript</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">TailwindCSS</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">Vercel</span>
-      </div>
-      </div>
-
-      <!-- Project Card: Weather Dashboard -->
-      <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
-      <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
-        <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
-        Weather Dashboard
-       <a href="https://github.com/yourusername/cv-matching-system" target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
-          <FaGithub />
-        </a>
-      </h3>
-      <p class="text-muted-foreground text-sm mb-4">
-        A real-time weather dashboard that fetches and displays weather data for any city. Features interactive charts and location search.
-      </p>
-      <ul class="mb-4 space-y-1 text-sm">
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-map-pin text-red-400"></span>
-        <span>Location-based weather search</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-bar-chart-3 text-blue-400"></span>
-        <span>Interactive weather charts</span>
-        </li>
-        <li class="flex items-center gap-2">
-        <span class="i-lucide-refresh-cw text-green-400"></span>
-        <span>Live data updates</span>
-        </li>
-      </ul>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-javascript"></span> JavaScript</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1"><span class="i-devicon-react"></span> React</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">Chart.js</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">OpenWeather API</span>
-        <span class="bg-muted px-2 py-0.5 rounded text-xs flex items-center gap-1">CSS Modules</span>
-      </div>
+      <div class="flex justify-center mt-6">
+      <Link
+        href="/projects"
+        class={buttonVariants({ variant: 'ghost' }) + ' group'}
+      >
+        View more projects
+        <span class="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
+      </Link>
       </div>
     </section>
     <!-- <section class="flex flex-col gap-y-4" aria-labelledby="latest-posts-title" role="region">
