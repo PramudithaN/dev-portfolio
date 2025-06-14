@@ -28,6 +28,12 @@ export async function GET(context: APIContext) {
         lastmod: new Date().toISOString(),
         changefreq: 'weekly',
         priority: '0.8'
+      },
+      {
+        url: `${baseUrl}/contact`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'monthly',
+        priority: '0.7'
       }
     ]
 

@@ -3,21 +3,18 @@ import type { IconMap, SocialLink, Site } from '@/types'
 export const SITE: Site = {
   title: 'Pramuditha Nadun',
   description:
-    "I'm a Junior Full Stack Developer with a passion for creating web applications. I have experience in both front-end and back-end development, and I'm always eager to learn new technologies and improve my skills. I enjoy collaborating with teams and contributing to projects that make a difference.",
-  href: 'https://cojocarudavid.me',
+    "I'm a Associate Software Engineer with a passion for creating web applications. I have experience in both front-end and back-end development, and I'm always eager to learn new technologies and improve my skills. I enjoy collaborating with teams and contributing to projects that make a difference.",
+  href: 'https://github.com/PramudithaN',
   author: 'Pramuditha Nadun',
   locale: 'en-US',
   location: 'Sri Lanka',
+  buttonText: 'Download Resume',
 }
 
 export const NAV_LINKS: SocialLink[] = [
   {
     href: '/',
     label: 'home',
-  },
-   {
-    href: '/experience',
-    label: 'experience',
   },
   {
     href: '/projects',
@@ -27,10 +24,10 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/contact',
     label: 'contact',
   },
-  {
-    href: '/blog',
-    label: 'blog',
-  },
+  // {
+  //   href: '/blog',
+  //   label: 'blog',
+  // },
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
@@ -39,21 +36,21 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'GitHub',
   },
   {
-    href: 'mailto:contact@cojocarudavid.me',
+    href: 'mailto:pramudithanadun@gmail.com',
     label: 'Email',
   },
   {
-    href: '+40 764 132 266',
-    label: 'Phone',
-  },
-  {
-    href: 'https://www.instagram.com/david._.cojo?ref=personal-website',
+    href: 'https://www.instagram.com/pramx.psd?igsh=MWNtaXF2cWw2ajEwcg==',
     label: 'Instagram',
   },
   {
-    href: '/rss.xml',
-    label: 'RSS',
+    href: 'http://www.linkedin.com/in/pramuditha-nadun-612b1b204',
+    label: 'LinkedIn',
   },
+  {
+    href: 'https://web.facebook.com/pramuditha.nadun',
+    label: 'Facebook',
+  }
 ]
 
 export const ICON_MAP: IconMap = {
@@ -63,6 +60,8 @@ export const ICON_MAP: IconMap = {
   Phone: 'lucide:phone',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
+  LinkedIn: 'lucide:linkedin',
+  Facebook: 'lucide:facebook',
 }
 
 export interface Category {
@@ -88,6 +87,7 @@ export const technologies: Technologies = {
     { text: 'CSS', logo: 'mdi:language-css3' },
     { text: 'Astro', logo: 'simple-icons:astro' },
     { text: 'Tailwind CSS', logo: 'mdi:tailwind' },
+    {text:'Figma', logo: 'cib:figma'},
   ],
   'Development Tools': [
     { text: 'Visual Studio Code', logo: 'mdi:visual-studio-code' },
