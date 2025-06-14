@@ -38,17 +38,19 @@ const currentUrl = Astro.url;
 const username = 'PramudithaN';
 const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
 const reposRaw = await res.json();
-const repos: RepoProject[] = reposRaw.map((repo: any) => ({
-  id: repo.id,
-  data: {
-    name: repo.name,
-    image: '/default-project-image.png', // Replace with a default image or logic to get image
-    description: repo.description,
-    tags: repo.topics || [],
-    endDate: repo.pushed_at,
-    language: repo.language,
-  },
-}));
+const repos: RepoProject[] = Array.isArray(reposRaw)
+  ? reposRaw.map((repo: any) => ({
+      id: repo.id,
+      data: {
+        name: repo.name,
+        image: '/default-project-image.png', // Replace with a default image or logic to get image
+        description: repo.description,
+        tags: repo.topics || [],
+        endDate: repo.pushed_at,
+        language: repo.language,
+      },
+    }))
+  : [];
 ---
 
 <Layout canonicalUrl={currentUrl}>
@@ -82,31 +84,55 @@ const repos: RepoProject[] = reposRaw.map((repo: any) => ({
     </div>
   
     <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-      {repos.map((project: RepoProject, _: number) => (
+      {console.log(repos)}
+      {(repos.length > 0 ? repos : [
+      {
+        id: 1,
+        data: {
+        name: "Sample Project",
+        image: "/default-project-image.png",
+        description: "This is a sample project shown as fallback.",
+        tags: ["astro", "demo"],
+        endDate: "2024-01-01T00:00:00Z",
+        language: "TypeScript",
+        },
+      },
+      {
+        id: 2,
+        data: {
+        name: "Another Example",
+        image: "/default-project-image.png",
+        description: "Another hardcoded project for fallback display.",
+        tags: ["fallback", "example"],
+        endDate: "2023-12-15T00:00:00Z",
+        language: "JavaScript",
+        },
+      },
+      ]).map((project: RepoProject, _: number) => (
       <div class="bg-card rounded-2xl p-6 flex flex-col justify-between shadow-md border border-card-foreground/10 transition-all duration-300 hover:shadow-lg">
-      <div class="flex items-center justify-between mb-2">
-      <h3 class="text-lg font-semibold text-foreground break-all">
-        <a href={`https://github.com/PramudithaN/${project.data.name}`} target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
-        {project.data.name}
-        <Icon name="lucide:github" class="inline h-4 w-4 ml-1 text-muted-foreground" />
-        </a>
-      </h3>
-      </div>
-      <p class="text-sm text-muted-foreground mb-4 min-h-[40px]">
-      {project.data.description || "No description provided."}
-      </p>
-      <div class="flex flex-wrap gap-2 mb-4">
-      {project.data.tags?.[0] && (
-        <span class="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{project.data.tags[0]}</span>
-      )}
-      {project.data.tags?.[1] && (
-        <span class="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{project.data.tags[1]}</span>
-      )}
-      {/* Language badge from API */}
-      {project.data.language && (
-        <span
+        <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-semibold text-foreground break-all">
+          <a href={`https://github.com/PramudithaN/${project.data.name}`} target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          {project.data.name}
+          <Icon name="lucide:github" class="inline h-4 w-4 ml-1 text-muted-foreground" />
+          </a>
+        </h3>
+        </div>
+        <p class="text-sm text-muted-foreground mb-4 min-h-[40px]">
+        {project.data.description || "No description provided."}
+        </p>
+        <div class="flex flex-wrap gap-2 mb-4">
+        {project.data.tags?.[0] && (
+          <span class="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{project.data.tags[0]}</span>
+        )}
+        {project.data.tags?.[1] && (
+          <span class="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{project.data.tags[1]}</span>
+        )}
+        {/* Language badge from API */}
+        {project.data.language && (
+          <span
           class={`rounded px-2 py-0.5 text-xs font-medium flex items-center gap-1
-        ${
+          ${
           ({
             JavaScript: 'bg-yellow-900/40 text-yellow-200',
             TypeScript: 'bg-blue-900/40 text-blue-200',
@@ -125,22 +151,22 @@ const repos: RepoProject[] = reposRaw.map((repo: any) => ({
             Swift: 'bg-orange-900/40 text-orange-200',
             Kotlin: 'bg-purple-900/40 text-purple-200',
           } as Record<string, string>)[String(project.data.language)] || 'bg-muted text-foreground'
-        }
+          }
           `}
-        >
+          >
           {project.data.language}
+          </span>
+        )}
+        </div>
+        <div class="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-2 border-t border-border/40">
+        <div class="flex gap-4">
+          <span>0 stars</span>
+          <span>0 forks</span>
+        </div>
+        <span>
+          Updated {project.data.endDate ? new Date(project.data.endDate).toLocaleDateString() : ''}
         </span>
-      )}
-      </div>
-      <div class="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-2 border-t border-border/40">
-      <div class="flex gap-4">
-        <span>0 stars</span>
-        <span>0 forks</span>
-      </div>
-      <span>
-        Updated {project.data.endDate ? new Date(project.data.endDate).toLocaleDateString() : ''}
-      </span>
-      </div>
+        </div>
       </div>
       ))}
     </div>
