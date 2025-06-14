@@ -232,7 +232,7 @@ const Navbar = () => {
                   <span className="text-muted-foreground text-sm" aria-label="copyright">
                     2020 - {new Date().getFullYear()} &copy; All rights reserved.
                   </span>
-                  <Separator orientation="vertical" className="hidden h-4! sm:block" />
+                  {/* <Separator orientation="vertical" className="hidden h-4! sm:block" />
                   <p className="text-muted-foreground text-sm" aria-label="open-source description">
                     <Link
                       href="https://github.com/cojocaru-david/portfolio"
@@ -240,7 +240,7 @@ const Navbar = () => {
                       external
                       underline>Open-source</Link
                     > under MIT license
-                  </p>
+                  </p> */}
                 </div>
               </motion.div>
             </div>

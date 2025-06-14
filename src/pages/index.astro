@@ -25,6 +25,16 @@ const currentUrl = Astro.url;
           className="h-auto w-40 object-cover sm:w-48 md:w-56 lg:w-64 "
         />
       </div> -->
+      <div class="relative overflow-hidden rounded-2xl bg-black p-2 sm:shrink-0 sm:overflow-hidden sm:rounded-2xl flex items-center justify-center w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+        <img
+          src="/images/avatar-astro.png"
+          alt="Profile illustration"
+          class="w-full h-full object-cover rounded-2xl"
+          loading="lazy"
+          width="256"
+          height="256"
+        />
+      </div>
       <div class="mt-8 sm:mt-0 sm:max-w-xl">
         <h1
           class="font-custom text-foreground text-start text-4xl font-extrabold sm:text-5xl"
