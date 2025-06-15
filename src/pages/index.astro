@@ -162,7 +162,7 @@ const currentUrl = Astro.url;
     /* !! IMPORTANT !! Image URLs for the backgrounds */
     .color-image {
       /* This is your full-color image */
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/Images/1335472.jpeg');
+      background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('public/Images/Developer.png');
       z-index: 2;
       /* CORE LOGIC: Initially show only the left 50% of this top image */
       clip-path: inset(0 50% 0 0);
@@ -172,7 +172,7 @@ const currentUrl = Astro.url;
 
     .bw-image {
       /* This is your black-and-white image, fully visible underneath */
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/Images/bnw.png');
+      background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('public/Images/Designer.png');
       z-index: 1;
     }
     /* --- End of important section --- */
@@ -270,7 +270,7 @@ const currentUrl = Astro.url;
 
       const parallaxIntensity = 20; // How many pixels the image will move.
       // A smaller value creates a more noticeable delay/smoothing effect.
-      const lerpFactor = 0.01; 
+      const lerpFactor = 0.04; 
 
       let targetX = window.innerWidth / 2;
       let currentX = window.innerWidth / 2;
