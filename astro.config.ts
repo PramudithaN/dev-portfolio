@@ -24,11 +24,11 @@ import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://www.cojocarudavid.me',
-//  output: 'server',
+ output: 'server',
  
-//  adapter: node({ // <-- IMPORTANT: Use the Node adapter, NOT the Vercel one
-//     mode: 'standalone'
-//   }),
+ adapter: node({ // <-- IMPORTANT: Use the Node adapter, NOT the Vercel one
+    mode: 'standalone'
+  }),
 
   integrations: [
     expressiveCode({
