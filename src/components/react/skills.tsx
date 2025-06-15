@@ -63,13 +63,13 @@ const categoryGroups = [
   categories.slice(groupSize * 2),
 ]
 
-const Skills: React.FC = () => {
+const Skills: React.FC<{ mode: string }> = ({ mode }) => {
   useEffect(() => {
     document.querySelectorAll('.tech-badge').forEach((badge) => {
       badge.classList.add('tech-badge-visible')
     })
   }, [])
-
+  console.log(mode, 'mode')
   return (
     <div className="z-30 mt-12 flex w-full flex-col max-w-[calc(100vw-5rem)] mx-auto lg:max-w-full">
       <div className="space-y-2">
