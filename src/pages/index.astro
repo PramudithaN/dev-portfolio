@@ -54,15 +54,39 @@ const currentUrl = Astro.url;
         </div>
       </a>
       <!-- Right Section Link (Transparent Hover Target) -->
-      <a href="/developer" class="group section-link coder-section">
+      <a href="/developer" class="group section-link coder-section hidden md:flex">
         <div class="content">
           <h1 class="title font-mono">&lt;CODER&gt;</h1>
           <span class="cta">
-            View as Developer
-            <span class="arrow">&rarr;</span>
+        View as Developer
+        <span class="arrow">&rarr;</span>
           </span>
         </div>
       </a>
+
+      <!-- Mobile: Show both buttons under the title/role -->
+      <div class="md:hidden absolute left-1/2 top-[calc(60%+2rem)] -translate-x-1/2 flex gap-4 z-30">
+        <a href="/about" class="group">
+          <Button variant="outline" className="font-bold px-6 py-2">
+        DESIGNER
+          </Button>
+        </a>
+        <a href="/developer" class="group">
+          <Button variant="outline" className="font-bold px-6 py-2">
+        &lt;CODER&gt;
+          </Button>
+        </a>
+      </div>
+
+      <!-- Hide the main section links on mobile -->
+      <style>
+        @media (max-width: 767px) {
+          .designer-section,
+          .coder-section {
+        display: none !important;
+          }
+        }
+      </style>
     </div>
 
     <!-- Social Media Icons -->
