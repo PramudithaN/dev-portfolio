@@ -1,62 +1,7 @@
-import Fuse from 'fuse.js'
-import { useState, useMemo, useCallback } from 'react'
-import { Input } from '@/components/ui/input'
-import BlogCardJSX from './blog-card'
-import debounce from 'lodash.debounce'
-import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { FaGithub } from 'react-icons/fa'
 
-const options = {
-  keys: ['data.title', 'data.description', 'data.tags'],
-  includeMatches: true,
-  minMatchCharLength: 3,
-  threshold: 0.3,
-  distance: 100,
-  sortFn: (a, b) => a.score - b.score,
-}
-
-function Contact({ searchList, initialPosts }) {
-  const [query, setQuery] = useState('')
-  const [filteredPosts, setFilteredPosts] = useState(initialPosts)
-
-  const processedSearchList = useMemo(
-    () =>
-      searchList.map((item) => ({
-        ...item,
-        data: {
-          ...item.data,
-          title: item.data.title.toLowerCase(),
-          description: item.data.description.toLowerCase(),
-          tags: item.data.tags.map((tag) => tag.toLowerCase()),
-        },
-      })),
-    [searchList],
-  )
-
-  const fuse = useMemo(
-    () => new Fuse(processedSearchList, options),
-    [processedSearchList],
-  )
-
-  const handleOnSearch = useCallback(
-    debounce((searchQuery) => {
-      if (searchQuery.length > 2) {
-        const results = fuse
-          .search(searchQuery.toLowerCase())
-          .map((result) => result.item)
-        setFilteredPosts(results)
-      } else {
-        setFilteredPosts(initialPosts)
-      }
-    }, 100),
-    [fuse, initialPosts],
-  )
-
-  const handleInputChange = (event) => {
-    const searchQuery = event.target.value
-    setQuery(searchQuery)
-    handleOnSearch(searchQuery)
-  }
+function Contact({}) {
 
   return (
     // <div>
@@ -127,7 +72,7 @@ function Contact({ searchList, initialPosts }) {
         pramudithanadun@gmail.com
         </a>
         <a href="https://github.com/PramudithaN" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm flex items-center gap-1">
-        {/* <FaGithub /> */} GitHub
+        <FaGithub /> GitHub
           </a>
         </div>
     

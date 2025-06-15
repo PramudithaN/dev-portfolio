@@ -1,0 +1,321 @@
+---
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import BlogCard from '@/components/react/blog-card'
+import Skills from '@/components/react/skills'
+import { buttonVariants } from '@/components/ui/button'
+import Logo from '@/components/ui/logo'
+import Layout from '@/layouts/Layout.astro'
+import { getRecentPosts } from '@/lib/data-utils'
+import { SITE } from '@/consts'
+import { FaGithub } from 'react-icons/fa'
+
+const blog = await getRecentPosts(3)
+const currentUrl = Astro.url;
+const username = 'PramudithaN';
+const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+const repos = await res.json();
+---
+
+<Layout canonicalUrl={currentUrl}>
+  <PageHead slot="head" title="Associate Software Engineer" />
+  <section class="flex flex-col gap-y-12 px-4 py-8 sm:px-8 lg:px-16">
+    <div
+      class="flex flex-col items-center text-center sm:flex-row sm:items-start sm:gap-8 sm:text-left"
+    >
+      <!-- <div class="relative overflow-hidden rounded-lg sm:shrink-0 sm:overflow-hidden sm:rounded-lg">
+        <Logo
+          className="h-auto w-40 object-cover sm:w-48 md:w-56 lg:w-64 "
+        />
+      </div> -->
+      <div class="relative overflow-hidden rounded-2xl bg-black-0 p-2 sm:shrink-0 sm:overflow-hidden sm:rounded-2xl flex items-center justify-center w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+        <img
+          src="public/Images/devDp.png"
+          alt="Profile illustration"
+          class="w-full h-full object-cover rounded-2xl"
+          loading="lazy"
+          width="256"
+          height="256"
+        />
+      </div>
+      <div class="mt-8 sm:mt-0 sm:max-w-xl">
+        <h1
+          class="font-custom text-foreground text-start text-4xl font-extrabold sm:text-5xl"
+        >
+          {SITE.title}
+        </h1>
+        <div class="mt-4 flex items-center gap-2" aria-label="location">
+          <span
+            class="bg-primary text-primary-foreground ring-primary/30 rounded-full px-3 py-1 text-sm font-medium ring-1"
+          >
+            I'm from
+          </span>
+          <span class="flex items-center gap-1">
+            <span class="text-foreground text-sm font-medium"> {SITE.location}</span>
+            <img
+              src="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/lk.svg"
+              alt="Sri Lanka Flag"
+              class="h-6 w-6 transition-transform duration-500 hover:rotate-12"
+              aria-hidden="true"
+            />
+          </span>
+        </div>
+        <p class="text-md text-foreground mt-4 text-start font-sans" title="description" aria-label="description">
+          {SITE.description}
+        </p>
+        <a
+          href="public/Documents/Resume.pdf"
+          download
+          class={buttonVariants({ variant: 'default', size: 'sm' }) + ' mt-4 flex items-center justify-center'}
+          aria-label="Download CV"
+        >
+          {SITE.buttonText || 'Download CV'}
+        </a>
+       
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <section class="relative" aria-labelledby="skills-title">
+      <h2
+        id="skills-title"
+        class="font-custom text-foreground text-2xl font-bold"
+        title="skills"
+        aria-label="skills"
+        role="heading"
+      >
+        Skills & Technologies
+      </h2>
+      <p class="text-muted-foreground text-sm" aria-label="skills description">
+        Here are some of the technologies I've been working with:
+      </p>
+      <div>
+        <Skills client:load />
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="relative" aria-labelledby="experience-title">
+      <h2
+        id="experience-title"
+        class="font-custom text-foreground text-2xl font-bold"
+        title="experience"
+        aria-label="experience"
+        role="heading"
+      >
+        Experience
+      </h2>
+      <div class="mt-6 border-l-2 border-border pl-6 flex flex-col gap-10">
+        <!-- Experience 1 -->
+        <div class="relative">
+          <span class="absolute -left-8 top-2 h-4 w-4 rounded-full bg-primary border-2 border-background"></span>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+            <span class="text-muted-foreground text-sm font-mono w-32 shrink-0">2024 - Present</span>
+            <div>
+              <h3 class="text-lg font-semibold text-foreground">
+              Associate Software Engineer <span class="text-primary">@ LOLC Technologies</span>
+              <a href="#" class="ml-1 i-lucide-arrow-up-right text-xs text-primary" aria-label="Company Link"></a>
+              </h3>
+              <div class="text-muted-foreground text-xs mb-1">Fusion X Team- Frontend Developer</div>
+              <div class="mb-2">
+              <span class="font-bold">Summary:</span>
+              <ul class="list-disc ml-5 text-sm">
+                <li>Working on software development in a hybrid environment.</li>
+                <li>Mastered React and TypeScript, with a deep understanding of React Hooks and Forms.</li>
+                <li>Worked with state management using Redux for efficient data handling.</li>
+                <li>Gained experience in Ant Design (AntD) for building modern UI components.</li>
+                <li>Enhanced UI/UX skills, including Figma design and user experience improvements.</li>
+                <li>Applied fundamental knowledge of Spring Boot for backend development.</li>
+                <li>Handled deployments to QA, UAT, and live environments.</li>
+                <li>Managed screen permissions and user access control.</li>
+                <li>Worked with CI/CD pipelines using Jenkins and ArgoCD.</li>
+                <li>Monitored deployment progress and troubleshooting issues.</li>
+                <li>Gained experience in Git versioning, including Git tags and commands.</li>
+                <li>Took second frontend ownership of the YARD TD and Supplier modules.</li>
+              </ul>
+              </div>
+              <div class="flex gap-2 mt-2 flex-wrap">
+              <span class="bg-blue-900/40 text-blue-200 rounded px-2 py-0.5 text-xs flex items-center gap-1"><span class="i-devicon-react"></span> React</span>
+              <span class="bg-blue-900/40 text-blue-200 rounded px-2 py-0.5 text-xs flex items-center gap-1"><span class="i-devicon-typescript"></span> TypeScript</span>
+              <span class="bg-purple-900/40 text-purple-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Redux</span>
+              <span class="bg-green-900/40 text-green-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">AntD</span>
+              <span class="bg-pink-900/40 text-pink-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Figma</span>
+              <span class="bg-orange-900/40 text-orange-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Spring Boot</span>
+              <span class="bg-gray-900/40 text-gray-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Jenkins</span>
+              <span class="bg-cyan-900/40 text-cyan-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">ArgoCD</span>
+              <span class="bg-gray-900/40 text-gray-200 rounded px-2 py-0.5 text-xs flex items-center gap-1"><span class="i-devicon-git"></span> Git</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <!-- Experience 2 -->
+          <div class="relative">
+            <span class="absolute -left-8 top-2 h-4 w-4 rounded-full bg-primary border-2 border-background"></span>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+            <span class="text-muted-foreground text-sm font-mono w-32 shrink-0">Mar 2022 - Oct 2024</span>
+            <div>
+              <h3 class="text-lg font-semibold text-foreground">
+              Trainee <span class="text-primary">@ LOLC Technologies</span>
+              <a href="#" class="ml-1 i-lucide-arrow-up-right text-xs text-primary" aria-label="Company Link"></a>
+              </h3>
+              <div class="text-muted-foreground text-xs mb-1">Fusion Team – Internship</div>
+              <div class="mb-2">
+              <span class="font-bold">Summary:</span>
+              <ul class="list-disc ml-5 text-sm">
+                <li>Completed a 2-year, 8-month internship in Software Engineering.</li>
+                <li>Worked as part of the UI/UX team, creating Figma designs and improving user experience.</li>
+                <li>Gained hands-on experience in frontend development using React and TypeScript.</li>
+                <li>Implemented interactive UI components and responsive layouts.</li>
+                <li>Worked with Java, Oracle Forms, and Jasper Reports for backend and reporting functionalities.</li>
+                <li>Developed and maintained data-driven reports and dashboards for business decision-making.</li>
+                <li>Collaborated with cross-functional teams to deliver software solutions aligned with business requirements.</li>
+              </ul>
+              </div>
+              <div class="flex gap-2 mt-2 flex-wrap">
+              <span class="bg-blue-900/40 text-blue-200 rounded px-2 py-0.5 text-xs flex items-center gap-1"><span class="i-devicon-react"></span> React</span>
+              <span class="bg-blue-900/40 text-blue-200 rounded px-2 py-0.5 text-xs flex items-center gap-1"><span class="i-devicon-typescript"></span> TypeScript</span>
+              <span class="bg-pink-900/40 text-pink-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Figma</span>
+              <span class="bg-orange-900/40 text-orange-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Java</span>
+              <span class="bg-gray-900/40 text-gray-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Oracle Forms</span>
+              <span class="bg-green-900/40 text-green-200 rounded px-2 py-0.5 text-xs flex items-center gap-1">Jasper Reports</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="relative" aria-labelledby="projects-title">
+      <h2
+      id="projects-title"
+      class="font-custom text-foreground text-2xl font-bold mb-2"
+      title="projects"
+      aria-label="projects"
+      role="heading"
+      >
+      Projects
+      </h2>
+      <p class="text-muted-foreground text-sm mb-6" aria-label="projects description">
+      Here are some of my public GitHub repositories.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        Array.isArray(repos) && repos.slice(0, 4).map(repo => (
+        <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
+          <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
+          {repo.name}
+          <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
+            <FaGithub />
+          </a>
+          </h3>
+          <p class="text-muted-foreground text-sm mb-4">
+          {repo.description || 'No description provided.'}
+          </p>
+          <ul class="mb-4 space-y-1 text-sm">
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-star text-yellow-400"></span>
+            <span>{repo.stargazers_count} stars</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-git-branch text-green-400"></span>
+            <span>{repo.forks_count} forks</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="i-lucide-clock text-blue-400"></span>
+            <span>Updated {new Date(repo.updated_at).toLocaleDateString()}</span>
+          </li>
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-2">
+          {repo.language && (
+            <span
+            class={`rounded px-2 py-0.5 text-xs font-medium flex items-center gap-1
+              ${
+              ({
+                JavaScript: 'bg-yellow-900/40 text-yellow-200',
+                TypeScript: 'bg-blue-900/40 text-blue-200',
+                Python: 'bg-blue-900/40 text-blue-200',
+                Java: 'bg-orange-900/40 text-orange-200',
+                HTML: 'bg-orange-900/40 text-orange-200',
+                CSS: 'bg-indigo-900/40 text-indigo-200',
+                Shell: 'bg-green-900/40 text-green-200',
+                C: 'bg-gray-900/40 text-gray-200',
+                'C++': 'bg-pink-900/40 text-pink-200',
+                PHP: 'bg-indigo-900/40 text-indigo-200',
+                Ruby: 'bg-red-900/40 text-red-200',
+                Go: 'bg-cyan-900/40 text-cyan-200',
+                Rust: 'bg-orange-900/40 text-orange-200',
+                Dart: 'bg-teal-900/40 text-teal-200',
+                Swift: 'bg-orange-900/40 text-orange-200',
+                Kotlin: 'bg-purple-900/40 text-purple-200',
+              } as Record<string, string>)[String(repo.language)] || 'bg-muted text-foreground'
+              }
+            `}
+            >
+            {repo.language}
+            </span>
+          )}
+          </div>
+          {repo.topics && repo.topics.map((topic: string) => (
+          <span class="bg-muted px-2 py-0.5 rounded text-xs">{topic}</span>
+          ))}
+        </div>
+        ))
+      }
+      </div>
+      <div class="flex justify-center mt-6">
+      <Link
+        href="/projects"
+        class={buttonVariants({ variant: 'ghost' }) + ' group'}
+      >
+        View more projects
+        <span class="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
+      </Link>
+      </div>
+    </section>
+   
+    <!-- Testimonials -->
+    <section class="relative" aria-labelledby="testimonials-title">
+      <h2
+        id="testimonials-title"
+        class="font-custom text-foreground text-2xl font-bold mb-2"
+        title="testimonials"
+        aria-label="testimonials"
+        role="heading"
+      >
+        Testimonials
+      </h2>
+      <p class="text-muted-foreground text-sm mb-6" aria-label="testimonials description">
+        What others say about working with me.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
+          <p class="text-foreground text-base mb-4">
+            "Pramuditha is a dedicated developer who consistently delivers high-quality work. His attention to detail and willingness to learn new technologies make him a valuable team member."
+          </p>
+          <div class="flex items-center gap-3">
+            <img src="/images/testimonial-avatar1.png" alt="Jane Doe" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+            <div>
+              <div class="font-semibold text-foreground">Jane Doe</div>
+              <div class="text-muted-foreground text-xs">Senior Software Engineer, LOLC Technologies</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
+          <p class="text-foreground text-base mb-4">
+            "He brings creativity and technical expertise to every project. Pramuditha's collaborative spirit and problem-solving skills are outstanding."
+          </p>
+          <div class="flex items-center gap-3">
+            <img src="/images/testimonial-avatar2.png" alt="John Smith" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+            <div>
+              <div class="font-semibold text-foreground">John Smith</div>
+              <div class="text-muted-foreground text-xs">UI/UX Lead, LOLC Technologies</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </section>
+</Layout>

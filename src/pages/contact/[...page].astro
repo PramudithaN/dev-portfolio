@@ -3,14 +3,9 @@
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Contact from '@/components/react/contact'
-import Search from '@/components/react/search'
-import { buttonVariants } from '@/components/ui/button'
-import PaginationComponent from '@/components/ui/pagination'
 import Layout from '@/layouts/Layout.astro'
 import { getAllPosts } from '@/lib/data-utils'
 import type { PaginateFunction } from 'astro'
-import { Icon } from 'astro-icon/components'
-import { FaGithub } from 'react-icons/fa'
 
 export async function getStaticPaths({
   paginate,
@@ -22,7 +17,6 @@ export async function getStaticPaths({
 }
 
 const { page } = Astro.props
-const searchList = await getAllPosts()
 const currentUrl = Astro.url;
 ---
 
@@ -34,5 +28,5 @@ const currentUrl = Astro.url;
       { label: 'Contact', href: '/contact', icon: 'lucide:archive' },
     ]}
   />
-      <Contact client:load searchList={searchList} initialPosts={page.data} /> 
+      <Contact /> 
 </Layout>
