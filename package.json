@@ -24,7 +24,7 @@
   "private": false,
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "astro start",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -34,6 +34,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/markdown-remark": "^6.3.2",
     "@astrojs/mdx": "^4.3.0",
+    "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.3.0",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.1",

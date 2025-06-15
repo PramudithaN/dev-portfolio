@@ -19,7 +19,7 @@ import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
-
+import node from '@astrojs/node';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
@@ -107,6 +107,8 @@ export default defineConfig({
     ],
     remarkPlugins: [remarkMath, remarkEmoji, remarkSectionize],
   },
-
-  adapter: vercel()
+ adapter: node({ // <-- IMPORTANT: Use the Node adapter, NOT the Vercel one
+    mode: 'standalone'
+  }),
+  // adapter: vercel()
 })
