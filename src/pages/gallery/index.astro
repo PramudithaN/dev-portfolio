@@ -1,0 +1,87 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import FilterableGallery from '@/components/react/filterableGallery';
+import Layout from '@/layouts/Layout.astro'
+import Parser from 'rss-parser'; // <-- We are using the new library
+
+const parser = new Parser();
+const currentUrl = Astro.url;
+
+// --- FINAL Pinterest Configuration ---
+const PINTEREST_USERNAME = 'ad0bep'; // <-- CORRECT username
+const BOARD_NAMES = ['social', 'manipulations', 'flyers']; // <-- CORRECT board names
+
+// --- FINAL Data Fetching Logic using rss-parser ---
+async function fetchPinterestImages() {
+  const allImages: { src: string; title: string; category: string }[] = [];
+  console.log('Starting to fetch images with the ROBUST RSS Parser...');
+
+  for (const board of BOARD_NAMES) {
+    const rssUrl = `https://www.pinterest.com/${PINTEREST_USERNAME}/${board}.rss`;
+    try {
+        console.log(`[${board}] Fetching and parsing URL: ${rssUrl}`);
+        const feed = await parser.parseURL(rssUrl);
+
+        if (!feed?.items?.length) {
+            console.warn(`[${board}] Feed parsed, but no items were found.`);
+            continue;
+        }
+        
+        console.log(`[${board}] Successfully found ${feed.items.length} items.`);
+
+        feed.items.forEach(item => {
+            if (item.content) {
+                const imgSrcMatch = item.content.match(/<img src="(.*?)"/);
+                if (imgSrcMatch) {
+                    allImages.push({
+                        src: imgSrcMatch[1].replace('_236x', '_736x'),
+                        title: item.title ?? '',
+                        category: board,
+                    });
+                }
+            }
+        });
+
+    } catch (error) {
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        console.error(`[${board}] Failed to fetch or parse feed. Error: ${errorMsg}`);
+    }
+  }
+
+  console.log(`Finished fetching. Total images found: ${allImages.length}`);
+  return allImages;
+}
+
+const images = await fetchPinterestImages();
+---
+
+<Layout canonicalUrl={currentUrl}>
+  <PageHead slot="head" title="Gallery" description="Explore my collection of photographic works from Pinterest." />
+  <Breadcrumbs
+    items={[
+      { label: 'Gallery', href: '/projects', icon: 'lucide:folder' },
+    ]}
+  />
+
+  <section class="max-w-screen-xl mx-auto mt-4 px-4 md:px-6">
+    <div class="text-center mb-4">
+      <h1 class="font-custom text-foreground text-4xl font-bold">Gallery</h1>
+    <p class="text-muted-foreground text-md max-w-2xl mx-auto text-center mt-4">
+      Explore my collection of digital works, including  digital art, and design projects. Each piece reflects my passion for creativity and visual storytelling.
+    </p>
+    </div>
+    
+    <FilterableGallery images={images} client:load />
+
+    {images.length === 0 && (
+      <div class="text-center p-8 bg-zinc-100 dark:bg-zinc-800 rounded-lg mt-8">
+        <p class="font-custom font-semibold">No images were found.</p>
+        <p class="font-custom text-sm text-zinc-600 dark:text-zinc-400 mt-2">
+          Error Loading Images.
+        </p>
+      </div>
+    )}
+
+  </section>
+</Layout>
