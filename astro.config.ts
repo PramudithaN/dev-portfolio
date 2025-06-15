@@ -20,7 +20,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
-import vercel from '@astrojs/vercel';
+// import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://www.cojocarudavid.me',
@@ -108,5 +108,5 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkEmoji, remarkSectionize],
   },
 
-  adapter: vercel()
+  // adapter: vercel()
 })
