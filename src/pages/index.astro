@@ -1,6 +1,9 @@
 ---
 // src/pages/landing.astro
+import Link from '@/components/Link.astro';
+import { Button } from '@/components/ui/button';
 import Layout from '@/layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 const currentUrl = Astro.url;
 ---
 
@@ -51,62 +54,140 @@ const currentUrl = Astro.url;
         </div>
       </a>
       <!-- Right Section Link (Transparent Hover Target) -->
-      <a href="/developer" class="group section-link coder-section">
+      <a href="/developer" class="group section-link coder-section hidden md:flex">
         <div class="content">
           <h1 class="title font-mono">&lt;CODER&gt;</h1>
           <span class="cta">
-            View as Developer
-            <span class="arrow">&rarr;</span>
+        View as Developer
+        <span class="arrow">&rarr;</span>
           </span>
         </div>
       </a>
+
+      <!-- Mobile: Show both buttons under the title/role -->
+      <div class="md:hidden absolute left-1/2 top-[calc(60%+2rem)] -translate-x-1/2 flex gap-4 z-30">
+        <a href="/about" class="group">
+          <Button variant="outline" className="font-bold px-6 py-2">
+        DESIGNER
+          </Button>
+        </a>
+        <a href="/developer" class="group">
+          <Button variant="outline" className="font-bold px-6 py-2">
+        &lt;CODER&gt;
+          </Button>
+        </a>
+      </div>
+
+      <!-- Hide the main section links on mobile -->
+      <style>
+        @media (max-width: 767px) {
+          .designer-section,
+          .coder-section {
+        display: none !important;
+          }
+        }
+      </style>
     </div>
-    <!-- Social Media Icons (Bottom Center) -->
-    <div class="social-icons absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-6">
-    <a href="https://github.com/PramudithaN" target="_blank" rel="noopener" aria-label="GitHub" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 21.13V22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <a href="http://www.linkedin.com/in/pramuditha-nadun-612b1b204" target="_blank" rel="noopener" aria-label="LinkedIn" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <rect width="16" height="16" x="4" y="4" rx="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 11v5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 8v.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12 16v-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 16v-3a2 2 0 0 0-4 0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <a href="https://www.behance.net/pramudithanadun1" target="_blank" rel="noopener" aria-label="Behance" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+    <!-- Social Media Icons -->
+       <div class="social-icons absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-6">
+        <!-- Github -->
+         <a
+          href={`https://github.com/PramudithaN`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Github"
+          aria-label="Github"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="line-md:github" class="size-4" />
+          </Button>
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          href={`http://www.linkedin.com/in/pramuditha-nadun-612b1b204`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="LinkedIn"
+          aria-label="LinkedIn"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="line-md:linkedin" class="size-4" />
+          </Button>
+        </a>
+
+        <!-- Behance -->
+        <!-- <a
+          href={`https://www.behance.net/pramudithanadun1`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Behance"
+          aria-label="Behance"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="simple-icons:behance" class="size-4" /> 
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <rect width="20" height="20" x="2" y="2" rx="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8 15v-6h3a2 2 0 0 1 0 4H8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M16 15a2 2 0 0 0 0-4c-1.1 0-2 .9-2 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M14 12h4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </a>
-    <a href="https://pin.it/Lb92N4TnM" target="_blank" rel="noopener" aria-label="Pinterest" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8.72 15.5c.28-1.5.56-3 .84-4.5-.5-.84-.5-2.06.28-2.78.78-.72 2.06-.56 2.5.5.44 1.06-.28 2.06-1.06 2.34-.78.28-1.5-.28-1.5-1.06" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12 17v-2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <a href="https://www.instagram.com/pramx.psd?igsh=MWNtaXF2cWw2ajEwcg==" target="_blank" rel="noopener" aria-label="Instagram" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <rect width="20" height="20" x="2" y="2" rx="5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="12" cy="12" r="5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M17 7h.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <a href="https://web.facebook.com/pramuditha.nadun" target="_blank" rel="noopener" aria-label="Facebook" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <rect width="20" height="20" x="2" y="2" rx="5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 8h-2a2 2 0 0 0-2 2v2h4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M14 16v-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    </div>
+          </Button>
+        </a> -->
+
+        <!-- Whatsapp -->
+        <a
+          href={`https://wa.me/?text=${encodeURIComponent(Astro.site + 'blog/')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="WhatsApp"
+          aria-label="WhatsApp"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="mdi:whatsapp" class="size-4" />
+          </Button>
+        </a>
+
+        <!-- Instagram -->
+        <a
+          href={`https://www.instagram.com/pramx.psd?igsh=MWNtaXF2cWw2ajEwcg==`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Instagram"
+          aria-label="Instagram"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="line-md:instagram" class="size-4" />
+          </Button>
+        </a>
+
+        <!-- Pinterest -->
+        <a
+          href={`https://pin.it/Lb92N4TnM`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Pinterest"
+          aria-label="Pinterest"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="mdi:pinterest" class="size-4" />
+          </Button>
+        </a>
+
+         <!-- Facebook -->
+        <a
+          href={`https://web.facebook.com/pramuditha.nadun`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Facebook"
+          aria-label="Facebook"
+        >
+          <Button variant="outline" className='cursor-pointer' size="icon">
+            <Icon name="line-md:facebook" class="size-4" />
+          </Button>
+        </a>
+      </div>
       </a>
     </div>
 

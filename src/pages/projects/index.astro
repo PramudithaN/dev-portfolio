@@ -36,14 +36,23 @@ const projectData = await getAllProjects()
 const currentUrl = Astro.url;
 
 const username = 'PramudithaN';
-const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-const reposRaw = await res.json();
+let reposRaw = [];
+try {
+  const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+  if (res.ok) {
+    reposRaw = await res.json();
+  } else {
+    reposRaw = [];
+  }
+} catch (e) {
+  reposRaw = [];
+}
 const repos: RepoProject[] = Array.isArray(reposRaw)
   ? reposRaw.map((repo: any) => ({
       id: repo.id,
       data: {
         name: repo.name,
-        image: '/default-project-image.png', // Replace with a default image or logic to get image
+        image: '/default-project-image.png',
         description: repo.description,
         tags: repo.topics || [],
         endDate: repo.pushed_at,
