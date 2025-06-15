@@ -11,6 +11,12 @@ export async function GET(context: APIContext) {
     const baseUrl = site.toString().endsWith('/') ? site.toString().slice(0, -1) : site.toString()
 
     const staticPages = [
+       {
+        url: `${baseUrl}/landing`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'daily',
+        priority: '1.0'
+      },
       {
         url: `${baseUrl}/`,
         lastmod: new Date().toISOString(),
