@@ -29,12 +29,17 @@ const logoWorks = [
         guideImage: "/Images/Skull_Island.webp",
         guideText: "Sharp angles and gradients create a sense of elevation and ambition, perfect for outdoor brands."
     },
+    
     // Add more logo works as needed
 ];
 
 export default function LogoCarousel() {
     const [current, setCurrent] = useState(0);
     const [popup, setPopup] = useState<number | null>(null);
+    const [expanded, setExpanded] = useState(false);
+
+    // Determine which cards to show
+    const visibleCards = expanded ? logoWorks : logoWorks.slice(0, 4);
 
     // MODIFIED: Load initial 'likes' state from Local Storage
     const [likes, setLikes] = useState<number[]>(() => {
@@ -45,7 +50,7 @@ export default function LogoCarousel() {
             return Array(logoWorks.length).fill(0);
         }
     });
-
+    
     // MODIFIED: Load initial 'liked' status from Local Storage
     const [liked, setLiked] = useState<boolean[]>(() => {
         try {
@@ -55,20 +60,16 @@ export default function LogoCarousel() {
             return Array(logoWorks.length).fill(false);
         }
     });
-
+    
     // NEW: useEffect to save 'likes' to Local Storage whenever it changes
     useEffect(() => {
         window.localStorage.setItem('logoLikes', JSON.stringify(likes));
     }, [likes]);
-
+    
     // NEW: useEffect to save 'liked' status to Local Storage whenever it changes
     useEffect(() => {
         window.localStorage.setItem('logoLikedStatus', JSON.stringify(liked));
     }, [liked]);
-
-
-    const scrollLeft = () => setCurrent((prev) => Math.max(prev - 1, 0));
-    const scrollRight = () => setCurrent((prev) => Math.min(prev + 1, logoWorks.length - 1));
 
     const handleLike = (idx: number) => {
         setLikes((prev) => {
@@ -87,39 +88,21 @@ export default function LogoCarousel() {
         });
     };
 
+
     return (
         <div className="relative w-full">
-            <div className="flex items-center">
-                <button
-                    className="p-2 rounded-full bg-muted hover:bg-accent transition disabled:opacity-50"
-                    onClick={scrollLeft}
-                    disabled={current === 0}
-                    aria-label="Scroll left"
-                >
-                    &#8592;
-                </button>
-                <div
-                    className="flex gap-4 px-4 py-6 w-full"
-                    style={{
-                        overflowX: 'auto',
-                        scrollbarWidth: 'none',
-                        // @ts-ignore
-                        msOverflowStyle: 'none'
-                    }}
-                >
-                    {logoWorks.map((work, idx) => (
+            <div className="flex flex-col items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full py-6">
+                    {visibleCards.map((work, idx) => (
                         <div
-                            className={`min-w-[260px] max-w-xs bg-card rounded-xl shadow-md p-4 flex-shrink-0 transition-transform duration-300 ${idx === current ? 'scale-105 border-2 border-primary' : ''}`}
+                            className={`bg-card rounded-xl shadow-md p-4 transition-transform duration-300 ${!expanded && idx === current ? 'scale-105 border-2 border-primary' : ''}`}
                             key={work.title}
-                            style={{
-                                display: Math.abs(idx - current) <= 1 ? 'block' : 'none'
-                            }}
                         >
                             <img
                                 src={work.image}
                                 alt={work.title}
                                 className="w-full h-40 object-cover rounded-lg cursor-pointer"
-                                onClick={() => setPopup(idx)}
+                                onClick={() => setPopup(expanded ? idx : idx)}
                                 loading="lazy"
                             />
                             <h3 className="mt-3 font-semibold text-lg">{work.title}</h3>
@@ -127,14 +110,25 @@ export default function LogoCarousel() {
                         </div>
                     ))}
                 </div>
-                <button
-                    className="p-2 rounded-full bg-muted hover:bg-accent transition disabled:opacity-50"
-                    onClick={scrollRight}
-                    disabled={current === logoWorks.length - 1}
-                    aria-label="Scroll right"
-                >
-                    &#8594;
-                </button>
+                {logoWorks.length > 4 && (
+                    <button
+                        className="mt-2 cursor-pointer p-2 rounded-full bg-muted hover:bg-accent transition"
+                        onClick={() => setExpanded((prev) => !prev)}
+                        aria-label={expanded ? "Collapse logos" : "Expand to show all logos"}
+                    >
+                        {expanded ? (
+                            // Collapse arrow (up)
+                            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 15l6-6 6 6"/>
+                            </svg>
+                        ) : (
+                            // Expand arrow (down)
+                            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        )}
+                    </button>
+                )}
             </div>
             {popup !== null && (
                 <>
@@ -143,7 +137,7 @@ export default function LogoCarousel() {
                             {/* Popup content */}
                             <div className="flex-1 min-w-0">
                                 <button
-                                    className="absolute top-2 right-5 text-xl font-bold text-muted-foreground hover:text-foreground"
+                                    className="absolute top-2 right-5 text-xl font-bold text-muted-foreground hover:text-foreground cursor-pointer"
                                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', scale: '1.6' }}
                                     onClick={() => setPopup(null)}
                                     aria-label="Close popup"
@@ -163,11 +157,12 @@ export default function LogoCarousel() {
                                         alt={logoWorks[popup].title + ' guide'}
                                         className="w-full object-contain rounded-lg"
                                         style={{ maxHeight: '320px',maxWidth: '500px', display: 'block', margin: '0 auto' }}
+                                        loading='lazy'
                                     />
                                     {/* Side icons moved to the right of the image */}
                                     <div className="flex flex-col items-center gap-6 pr-6 pt-6">
                                         <button
-                                            className={`bg-muted p-3 rounded-full hover:bg-accent transition ${liked[popup] ? 'text-orange-200' : ''}`}
+                                            className={`cursor-pointer bg-muted p-3 rounded-full hover:bg-accent transition ${liked[popup] ? 'text-orange-200' : ''}`}
                                             title="Appreciate"
                                             onClick={() => handleLike(popup)}
                                         >
@@ -187,7 +182,7 @@ export default function LogoCarousel() {
                                         </button>
                                         <div className="text-xs text-center mt-1">{likes[popup] ?? 0} likes</div>
                                         <button
-                                            className="bg-muted p-3 rounded-full hover:bg-accent transition"
+                                            className="cursor-pointer bg-muted p-3 rounded-full hover:bg-accent transition"
                                             title="Share"
                                             onClick={async () => {
                                                 const url = `${window.location.origin}${window.location.pathname}?logo=${popup}`;
@@ -224,14 +219,6 @@ export default function LogoCarousel() {
                     </div>
                 </>
             )}
-            <style>{`
-                .flex[style]::-webkit-scrollbar {
-                    display: none;
-                }
-                .max-h-80::-webkit-scrollbar {
-                    display: none;
-                }
-            `}</style>
         </div>
     );
 }
