@@ -4,36 +4,36 @@ const logoWorks = [
     {
         title: "Adobe Prama",
         description: "A Logo created for my personal use.Uses the initials to create a modern and sleek design.",
-        image: "/Images/AP-PRO-pic-(1).jpg",
-        guideImage: "/Images/AP-PRO-pic-(1).jpg",
+        image: "/Images/AP-Logo.webp",
+        guideImage: "/Images/AP-Logo.webp",
         guideText: "This logo combines the initials 'AP' in a sleek, modern style. The design is versatile for various applications, from digital to print."
     },
     {
         title: "Nexorbyte",
         description: "A Logo designed for a tech startup company.",
-        image: "/Images/Color01.png",
-        guideImage: "/Images/Color01.png",
+        image: "/Images/Nexorbyte.webp",
+        guideImage: "/Images/Nexorbyte.webp",
         guideText: "This logo features a stylized sphere with circuit patterns, representing innovation and technology. The design is sleek and modern, suitable for a tech company."
     },
     {
         title: "Parallax Peaks",
         description: "Logo for a project of Rotary Club in IIT",
-        image: "/Images/Parralax.jpg",
-        guideImage: "/Images/Parralax.jpg",
+        image: "/Images/Parallax.webp",
+        guideImage: "/Images/Parallax.webp",
         guideText: "This is for a coding competition organized by the Rotary Club in IIT. The logo features a stylized mountain peak, symbolizing challenges and achievements in coding."
     },
     {
         title: "The Shady Tree",
         description: "Logo for an Restaurant. Features a stylized tree with a modern twist.",
-        image: "/Images/Shady-Tree.jpg",
-        guideImage: "/Images/Shady-Tree.jpg",
+        image: "/Images/Shady-Tree.webp",
+        guideImage: "/Images/Shady-Tree.webp",
         guideText: "The Restaurant itself is under a Huge tree.So the logo is designed to reflect that. The tree symbolizes growth and stability, while the modern design keeps it fresh and appealing."
     },
     {
         title: "Cloudy Elegance",
         description: "A Logo designed for a saloon.",
-        image: "/Images/CE.jpg",
-        guideImage: "/Images/CE.jpg",
+        image: "/Images/CE.webp",
+        guideImage: "/Images/CE.webp",
         guideText: "This logo features a stylized cloud with elegant curves, symbolizing a fresh and airy atmosphere. The design is perfect for a salon, conveying beauty and sophistication."
     },
     
@@ -152,7 +152,7 @@ export default function LogoCarousel() {
                                     &times;
                                 </button>
                                 <div
-                                    className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex"
+                                     className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex"
                                     style={{
                                         scrollbarWidth: 'none',
                                         // @ts-ignore
@@ -166,7 +166,7 @@ export default function LogoCarousel() {
                                         style={{ maxHeight: '320px',maxWidth: '500px', display: 'block', margin: '0 auto' }}
                                         loading='lazy'
                                     />
-                                    {/* Side icons moved to the right of the image */}
+                                {/* Side icons moved to the right of the image */}
                                     <div className="flex flex-col items-center gap-6 pr-6 pt-6">
                                         <button
                                             className={`cursor-pointer bg-muted p-3 rounded-full hover:bg-accent transition ${liked[popup] ? 'text-orange-200' : ''}`}
@@ -217,13 +217,13 @@ export default function LogoCarousel() {
                                                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                             </span>
                                         </button>
-                                    </div>
+                                </div>
                                 </div>
                                 <h3 className="font-bold text-xl mb-2">{logoWorks[popup].title}</h3>
-                                <p className="text-base">{logoWorks[popup].guideText}</p>
+                                <p className="text-base">{logoWorks[popup].guideText}</p> 
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </>
             )}
         </div>
