@@ -6,6 +6,7 @@ import { SITE } from '@/consts'
 import Link from '@/components/Link.astro';
 import { buttonVariants } from '@/components/ui/button';
 import LogoCarousel from '@/components/react/logocarousel';
+import VisualEffects from '@/components/react/visualeffects';
 
 
 const currentUrl = Astro.url;
@@ -78,6 +79,7 @@ const repos = await res.json();
       </div>
     </section>
 
+    <!-- Logo Design -->
     <section class="relative" aria-labelledby="logo-design-title">
       <h2
       id="logo-design-title"
@@ -96,6 +98,24 @@ const repos = await res.json();
       </div>
     </section>
     
+ <!-- VFX -->
+    <section class="relative" aria-labelledby="visual-effects-title">
+      <h2
+      id="visual-effects-title"
+      class="font-custom text-foreground text-2xl font-bold"
+      title="visual-effects"
+      aria-label="visual-effects"
+      role="heading"
+      >
+      Visual Effects
+      </h2>
+      <p class="text-muted-foreground text-sm" aria-label="visual-effects description">
+      Here are some of the VFX work I've been done:
+      </p>
+      <div class="w-full max-w-4xl mx-auto">
+      <VisualEffects client:load />
+      </div>
+    </section>
 
   </section>
 </Layout>
