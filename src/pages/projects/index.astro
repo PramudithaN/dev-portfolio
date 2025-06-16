@@ -6,7 +6,6 @@ import { getAllProjects } from '@/lib/data-utils'
 import type { PaginateFunction } from 'astro'
 import { Icon } from 'astro-icon/components'
 
-// Define the RepoProject type to match your project data structure
 type RepoProject = {
   id: string | number;
   data: {
@@ -90,7 +89,6 @@ const repos: RepoProject[] = Array.isArray(reposRaw)
     </div>
   
     <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-      {console.log(repos)}
       {(repos.length > 0 ? repos : [
       {
         id: 1,

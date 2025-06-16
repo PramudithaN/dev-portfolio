@@ -88,12 +88,10 @@ export default function VisualEffects() {
                 aria-label={showAll ? "Collapse logos" : "Expand to show all logos"}
                 >
                 {showAll ? (
-                    // Collapse arrow (up)
                     <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M6 15l6-6 6 6"/>
                     </svg>
                 ) : (
-                    // Expand arrow (down)
                     <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M6 9l6 6 6-6"/>
                     </svg>

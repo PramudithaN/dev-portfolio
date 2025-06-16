@@ -69,7 +69,7 @@ const Skills: React.FC<{ mode: string }> = ({ mode }) => {
       badge.classList.add('tech-badge-visible')
     })
   }, [])
-  console.log(mode, 'mode')
+
   return (
     <div className="z-30 mt-12 flex w-full flex-col max-w-[calc(100vw-5rem)] mx-auto lg:max-w-full">
       <div className="space-y-2">
