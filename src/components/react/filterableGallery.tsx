@@ -32,8 +32,9 @@ export default function FilterableGallery({ images }: Props) {
 
   // Style for the filter buttons
   const baseButtonClass = "px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200";
-  const activeButtonClass = "bg-white text-black"; // Updated for better contrast as per images
-  const inactiveButtonClass = "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"; // Updated for better contrast as per images
+//   const activeButtonClass = "bg-gray-200 text-black"; // Updated for better contrast as per images
+const activeButtonClass = "bg-[#6d584f] text-white hover:bg-[#5a473f]";
+const inactiveButtonClass = "bg-gray-200 text-black";
 
   // --- START OF THE FIX ---
   // Dynamically calculate masonry columns to prevent empty columns
