@@ -5,6 +5,7 @@ import Layout from '@/layouts/Layout.astro'
 import { SITE } from '@/consts'
 import Link from '@/components/Link.astro';
 import { buttonVariants } from '@/components/ui/button';
+import LogoCarousel from '@/components/react/logocarousel';
 
 
 const currentUrl = Astro.url;
@@ -30,7 +31,7 @@ const repos = await res.json();
         A glimpse into my creative endeavors.
       </p>
       
-      <div class="mt-6 grid h-[540px] grid-cols-3 grid-rows-3 gap-4">
+    <div class="mt-6 grid h-[540px] grid-cols-3 grid-rows-3 gap-4">
         <div class="col-span-2 row-span-1 rounded-2xl overflow-hidden bg-gray-900 transform transition-transform duration-300 hover:scale-105">
           <img src="/Images/Deset-Truck.webp" alt="Neo Bot style project" class="h-full w-full object-cover" loading="lazy" />
         </div>
@@ -47,17 +48,18 @@ const repos = await res.json();
           <img src="/Images/portal.webp" alt="Cyberpunk style project" class="h-full w-full object-cover" loading="lazy" />
         </div>
       </div>
-    </section>
-    <div class="flex justify-center mt-8">
-         <Link
+        </section>
+        <div class="flex justify-center mt-4 mb-0 sm:mb-4">
+      <Link
         href="/gallery"
         class={buttonVariants({ variant: 'default' }) + ' group'}
       >
         View Gallery
         <span class="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
       </Link>
-    </div>
+        </div>
   
+    <!-- Skills -->
     <section class="relative" aria-labelledby="skills-title">
       <h2
         id="skills-title"
@@ -76,6 +78,25 @@ const repos = await res.json();
       </div>
     </section>
 
+    <section class="relative" aria-labelledby="logo-design-title">
+      <h2
+        id="logo-design-title"
+        class="font-custom text-foreground text-2xl font-bold"
+        title="logo-design"
+        aria-label="logo-design"
+        role="heading"
+      >
+        Logo Design
+      </h2>
+      <p class="text-muted-foreground text-sm" aria-label="logo-design description">
+        Here are some of the logo design work I've been done:
+      </p>
+      
+      <LogoCarousel client:load />
+      <div>
+       
+      </div>
+    </section>
     
 
   </section>
