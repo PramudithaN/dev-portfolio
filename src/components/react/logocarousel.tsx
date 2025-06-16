@@ -22,6 +22,13 @@ const logoWorks = [
         guideImage: "/Images/F-Superhero-Dog.webp",
         guideText: "Sharp angles and gradients create a sense of elevation and ambition, perfect for outdoor brands."
     },
+    {
+        title: "Test Data",
+        description: "Logo for an adventure brand, featuring bold mountain shapes.",
+        image: "/Images/Skull_Island.webp",
+        guideImage: "/Images/Skull_Island.webp",
+        guideText: "Sharp angles and gradients create a sense of elevation and ambition, perfect for outdoor brands."
+    },
     // Add more logo works as needed
 ];
 
@@ -155,7 +162,7 @@ export default function LogoCarousel() {
                                         src={logoWorks[popup].guideImage}
                                         alt={logoWorks[popup].title + ' guide'}
                                         className="w-full object-contain rounded-lg"
-                                        style={{ maxHeight: '320px', display: 'block', margin: '0 auto' }}
+                                        style={{ maxHeight: '320px',maxWidth: '500px', display: 'block', margin: '0 auto' }}
                                     />
                                     {/* Side icons moved to the right of the image */}
                                     <div className="flex flex-col items-center gap-6 pr-6 pt-6">
