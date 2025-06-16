@@ -3,32 +3,28 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import FilterableGallery from '@/components/react/filterableGallery';
 import Layout from '@/layouts/Layout.astro'
-import Parser from 'rss-parser'; // <-- We are using the new library
+import Parser from 'rss-parser';
 
 const parser = new Parser();
 const currentUrl = Astro.url;
 
 // --- FINAL Pinterest Configuration ---
-const PINTEREST_USERNAME = 'ad0bep'; // <-- CORRECT username
-const BOARD_NAMES = ['social', 'manipulations', 'flyers']; // <-- CORRECT board names
+const PINTEREST_USERNAME = 'ad0bep';
+const BOARD_NAMES = ['all-pins', 'manipulations', 'flyers', 'social']; // Add all relevant board names as seen in your Pinterest
 
 // --- FINAL Data Fetching Logic using rss-parser ---
 async function fetchPinterestImages() {
   const allImages: { src: string; title: string; category: string }[] = [];
-  console.log('Starting to fetch images with the ROBUST RSS Parser...');
 
   for (const board of BOARD_NAMES) {
     const rssUrl = `https://www.pinterest.com/${PINTEREST_USERNAME}/${board}.rss`;
     try {
-        console.log(`[${board}] Fetching and parsing URL: ${rssUrl}`);
         const feed = await parser.parseURL(rssUrl);
 
         if (!feed?.items?.length) {
             console.warn(`[${board}] Feed parsed, but no items were found.`);
             continue;
         }
-        
-        console.log(`[${board}] Successfully found ${feed.items.length} items.`);
 
         feed.items.forEach(item => {
             if (item.content) {
@@ -48,8 +44,6 @@ async function fetchPinterestImages() {
         console.error(`[${board}] Failed to fetch or parse feed. Error: ${errorMsg}`);
     }
   }
-
-  console.log(`Finished fetching. Total images found: ${allImages.length}`);
   return allImages;
 }
 

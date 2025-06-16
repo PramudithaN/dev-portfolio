@@ -4,11 +4,8 @@ import { FaGithub } from 'react-icons/fa'
 function Contact({}) {
 
   return (
-    // <div>
       <div>
-    <section 
-    // className="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8 my-12"
-    >
+    <section>
       <h2
         id="contact-title"
         className="font-custom text-foreground text-2xl font-bold mb-2"
@@ -77,28 +74,6 @@ function Contact({}) {
         </div>
     
     </section>
-
-      {/* <hr className="my-6 border-neutral-200 dark:border-neutral-700" />
-      <div className={cn('flex items-center justify-between', 'mb-4', !query && 'hidden')}>
-        <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
-          {filteredPosts.length} posts found
-        </h2>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400">
-          Contact results for: <strong>{query}</strong>
-        </p>
-      </div>
-
-      <div className="mt-6">
-        <ul className="flex flex-col gap-4">
-          {filteredPosts.slice(0, 50).map((post, index) => (
-            <li key={post.id || post.slug || index}>
-              <BlogCardJSX entry={post} />
-            </li>
-          ))}
-        </ul>
-
-     
-      </div> */}
     </div>
   )
 }

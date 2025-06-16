@@ -36,8 +36,6 @@ const logoWorks = [
         guideImage: "/Images/CE.webp",
         guideText: "This logo features a stylized cloud with elegant curves, symbolizing a fresh and airy atmosphere. The design is perfect for a salon, conveying beauty and sophistication."
     },
-    
-    // Add more logo works as needed
 ];
 
 export default function LogoCarousel() {
@@ -45,10 +43,8 @@ export default function LogoCarousel() {
     const [popup, setPopup] = useState<number | null>(null);
     const [expanded, setExpanded] = useState(false);
 
-    // Determine which cards to show
     const visibleCards = expanded ? logoWorks : logoWorks.slice(0, 4);
 
-    // MODIFIED: Load initial 'likes' state from Local Storage
     const [likes, setLikes] = useState<number[]>(() => {
         try {
             const savedLikes = window.localStorage.getItem('logoLikes');
@@ -57,8 +53,7 @@ export default function LogoCarousel() {
             return Array(logoWorks.length).fill(0);
         }
     });
-    
-    // MODIFIED: Load initial 'liked' status from Local Storage
+
     const [liked, setLiked] = useState<boolean[]>(() => {
         try {
             const savedLiked = window.localStorage.getItem('logoLikedStatus');
@@ -67,13 +62,11 @@ export default function LogoCarousel() {
             return Array(logoWorks.length).fill(false);
         }
     });
-    
-    // NEW: useEffect to save 'likes' to Local Storage whenever it changes
+
     useEffect(() => {
         window.localStorage.setItem('logoLikes', JSON.stringify(likes));
     }, [likes]);
-    
-    // NEW: useEffect to save 'liked' status to Local Storage whenever it changes
+
     useEffect(() => {
         window.localStorage.setItem('logoLikedStatus', JSON.stringify(liked));
     }, [liked]);
@@ -84,7 +77,7 @@ export default function LogoCarousel() {
             if (liked[idx]) {
                 updated[idx] = Math.max(0, updated[idx] - 1);
             } else {
-                updated[idx] = (updated[idx] || 0) + 1; // Ensure it's a number before adding
+                updated[idx] = (updated[idx] || 0) + 1;
             }
             return updated;
         });
@@ -124,12 +117,10 @@ export default function LogoCarousel() {
                         aria-label={expanded ? "Collapse logos" : "Expand to show all logos"}
                     >
                         {expanded ? (
-                            // Collapse arrow (up)
                             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M6 15l6-6 6 6"/>
                             </svg>
                         ) : (
-                            // Expand arrow (down)
                             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M6 9l6 6 6-6"/>
                             </svg>
@@ -192,12 +183,10 @@ export default function LogoCarousel() {
                                         >
                                             <span role="img" aria-label="like">
                                                 {liked[popup] ? (
-                                                    // Filled heart
                                                     <svg width="24" height="24" fill="currentColor" stroke="currentColor" strokeWidth="2">
                                                         <path d="M12 21C12 21 4 13.36 4 8.5A4.5 4.5 0 0 1 8.5 4A4.5 4.5 0 0 1 12 7.09A4.5 4.5 0 0 1 15.5 4A4.5 4.5 0 0 1 20 8.5C20 13.36 12 21 12 21Z"/>
                                                     </svg>
                                                 ) : (
-                                                    // Outlined heart
                                                     <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                                                         <path d="M12 21C12 21 4 13.36 4 8.5A4.5 4.5 0 0 1 8.5 4A4.5 4.5 0 0 1 12 7.09A4.5 4.5 0 0 1 15.5 4A4.5 4.5 0 0 1 20 8.5C20 13.36 12 21 12 21Z"/>
                                                     </svg>
