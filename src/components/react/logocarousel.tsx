@@ -2,32 +2,39 @@ import { useState, useEffect } from 'react';
 
 const logoWorks = [
     {
-        title: "Deepest Secrets",
-        description: "A logo inspired by underwater exploration and mystery.",
-        image: "/Images/ED-4.webp",
-        guideImage: "/Images/IHUB-FINAL LOGO.svg",
-        guideText: "This logo represents the unknown depths of creativity, using cool blue tones and dynamic lighting to evoke a sense of wonder and discovery."
+        title: "Adobe Prama",
+        description: "A Logo created for my personal use.Uses the initials to create a modern and sleek design.",
+        image: "/Images/AP-Logo.webp",
+        guideImage: "/Images/AP-Logo.webp",
+        guideText: "This logo combines the initials 'AP' in a sleek, modern style. The design is versatile for various applications, from digital to print."
     },
     {
-        title: "Minimalist Owl",
-        description: "A clean, modern owl logo for a tech startup.",
-        image: "/Images/GALLE-FORT-Microworld.webp",
-        guideImage: "/Images/GALLE-FORT-Microworld.webp",
-        guideText: "The owl symbolizes wisdom and vision. The minimalist lines keep the design versatile and memorable."
+        title: "Nexorbyte",
+        description: "A Logo designed for a tech startup company.",
+        image: "/Images/Nexorbyte.webp",
+        guideImage: "/Images/Nexorbyte.webp",
+        guideText: "This logo features a stylized sphere with circuit patterns, representing innovation and technology. The design is sleek and modern, suitable for a tech company."
     },
     {
-        title: "Mountain Peak",
-        description: "Logo for an adventure brand, featuring bold mountain shapes.",
-        image: "/Images/F-Superhero-Dog.webp",
-        guideImage: "/Images/F-Superhero-Dog.webp",
-        guideText: "Sharp angles and gradients create a sense of elevation and ambition, perfect for outdoor brands."
+        title: "Parallax Peaks",
+        description: "Logo for a project of Rotary Club in IIT",
+        image: "/Images/Parallax.webp",
+        guideImage: "/Images/Parallax.webp",
+        guideText: "This is for a coding competition organized by the Rotary Club in IIT. The logo features a stylized mountain peak, symbolizing challenges and achievements in coding."
     },
     {
-        title: "Test Data",
-        description: "Logo for an adventure brand, featuring bold mountain shapes.",
-        image: "/Images/Skull_Island.webp",
-        guideImage: "/Images/Skull_Island.webp",
-        guideText: "Sharp angles and gradients create a sense of elevation and ambition, perfect for outdoor brands."
+        title: "The Shady Tree",
+        description: "Logo for an Restaurant. Features a stylized tree with a modern twist.",
+        image: "/Images/Shady-Tree.webp",
+        guideImage: "/Images/Shady-Tree.webp",
+        guideText: "The Restaurant itself is under a Huge tree.So the logo is designed to reflect that. The tree symbolizes growth and stability, while the modern design keeps it fresh and appealing."
+    },
+    {
+        title: "Cloudy Elegance",
+        description: "A Logo designed for a saloon.",
+        image: "/Images/CE.webp",
+        guideImage: "/Images/CE.webp",
+        guideText: "This logo features a stylized cloud with elegant curves, symbolizing a fresh and airy atmosphere. The design is perfect for a salon, conveying beauty and sophistication."
     },
     
     // Add more logo works as needed
@@ -145,22 +152,39 @@ export default function LogoCarousel() {
                                     &times;
                                 </button>
                                 <div
-                                    className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex"
+                                    className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex flex-col sm:flex-row"
                                     style={{
                                         scrollbarWidth: 'none',
                                         // @ts-ignore
                                         msOverflowStyle: 'none'
                                     }}
                                 >
-                                    <img
-                                        src={logoWorks[popup].guideImage}
-                                        alt={logoWorks[popup].title + ' guide'}
-                                        className="w-full object-contain rounded-lg"
-                                        style={{ maxHeight: '320px',maxWidth: '500px', display: 'block', margin: '0 auto' }}
-                                        loading='lazy'
-                                    />
-                                    {/* Side icons moved to the right of the image */}
-                                    <div className="flex flex-col items-center gap-6 pr-6 pt-6">
+                                    <div
+                                        style={{
+                                            maxHeight: '250px',
+                                            maxWidth: '500px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: '20px',
+                                            overflow: 'hidden',
+                                            margin: '0 auto',
+                                        }}
+                                    >
+                                        <img
+                                            src={logoWorks[popup].guideImage}
+                                            alt={logoWorks[popup].title + ' guide'}
+                                            className="w-full object-contain"
+                                            style={{
+                                                maxHeight: '250px',
+                                                maxWidth: '500px',
+                                                display: 'block',
+                                            }}
+                                            loading='lazy'
+                                        />
+                                    </div>
+                                    {/* Side icons: below image on mobile, right on desktop */}
+                                    <div className="flex flex-row sm:flex-col items-center justify-center gap-6 pr-0 sm:pr-6 pt-4 sm:pt-6 w-full sm:w-auto">
                                         <button
                                             className={`cursor-pointer bg-muted p-3 rounded-full hover:bg-accent transition ${liked[popup] ? 'text-orange-200' : ''}`}
                                             title="Appreciate"
