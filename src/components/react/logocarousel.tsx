@@ -186,7 +186,31 @@ export default function LogoCarousel() {
                                             </span>
                                         </button>
                                         <div className="text-xs text-center mt-1">{likes[popup] ?? 0} likes</div>
-                                        <button className="bg-muted p-3 rounded-full hover:bg-accent transition" title="Share">
+                                        <button
+                                            className="bg-muted p-3 rounded-full hover:bg-accent transition"
+                                            title="Share"
+                                            onClick={async () => {
+                                                const url = `${window.location.origin}${window.location.pathname}?logo=${popup}`;
+                                                if (navigator.share) {
+                                                    try {
+                                                        await navigator.share({
+                                                            title: logoWorks[popup].title,
+                                                            text: logoWorks[popup].description,
+                                                            url,
+                                                        });
+                                                    } catch {
+                                                        // User cancelled or error
+                                                    }
+                                                } else {
+                                                    try {
+                                                        await navigator.clipboard.writeText(url);
+                                                        alert('Link copied to clipboard!');
+                                                    } catch {
+                                                        alert('Could not copy link.');
+                                                    }
+                                                }
+                                            }}
+                                        >
                                             <span role="img" aria-label="share">
                                                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                             </span>
