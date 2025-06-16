@@ -152,22 +152,39 @@ export default function LogoCarousel() {
                                     &times;
                                 </button>
                                 <div
-                                     className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex"
+                                    className="w-full max-h-80 overflow-y-auto rounded-lg mb-4 flex flex-col sm:flex-row"
                                     style={{
                                         scrollbarWidth: 'none',
                                         // @ts-ignore
                                         msOverflowStyle: 'none'
                                     }}
                                 >
-                                    <img
-                                        src={logoWorks[popup].guideImage}
-                                        alt={logoWorks[popup].title + ' guide'}
-                                        className="w-full object-contain rounded-lg"
-                                        style={{ maxHeight: '320px',maxWidth: '500px', display: 'block', margin: '0 auto' }}
-                                        loading='lazy'
-                                    />
-                                {/* Side icons moved to the right of the image */}
-                                    <div className="flex flex-col items-center gap-6 pr-6 pt-6">
+                                    <div
+                                        style={{
+                                            maxHeight: '250px',
+                                            maxWidth: '500px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: '20px',
+                                            overflow: 'hidden',
+                                            margin: '0 auto',
+                                        }}
+                                    >
+                                        <img
+                                            src={logoWorks[popup].guideImage}
+                                            alt={logoWorks[popup].title + ' guide'}
+                                            className="w-full object-contain"
+                                            style={{
+                                                maxHeight: '250px',
+                                                maxWidth: '500px',
+                                                display: 'block',
+                                            }}
+                                            loading='lazy'
+                                        />
+                                    </div>
+                                    {/* Side icons: below image on mobile, right on desktop */}
+                                    <div className="flex flex-row sm:flex-col items-center justify-center gap-6 pr-0 sm:pr-6 pt-4 sm:pt-6 w-full sm:w-auto">
                                         <button
                                             className={`cursor-pointer bg-muted p-3 rounded-full hover:bg-accent transition ${liked[popup] ? 'text-orange-200' : ''}`}
                                             title="Appreciate"
@@ -217,13 +234,13 @@ export default function LogoCarousel() {
                                                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                             </span>
                                         </button>
-                                </div>
+                                    </div>
                                 </div>
                                 <h3 className="font-bold text-xl mb-2">{logoWorks[popup].title}</h3>
-                                <p className="text-base">{logoWorks[popup].guideText}</p> 
-                                </div>
+                                <p className="text-base">{logoWorks[popup].guideText}</p>
                             </div>
                         </div>
+                    </div>
                 </>
             )}
         </div>
