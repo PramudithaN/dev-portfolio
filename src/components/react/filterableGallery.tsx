@@ -17,9 +17,9 @@ export default function FilterableGallery({ images }: Props) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedImageIdx, setSelectedImageIdx] = useState<number | undefined>(undefined);
   
-  const baseButtonClass = "px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200";
-  const activeButtonClass = "bg-[#6d584f] text-white hover:bg-[#5a473f]";
-  const inactiveButtonClass = "bg-gray-200 text-black";
+  const baseButtonClass = "cursor-pointer px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200";
+  const activeButtonClass = "cursor-pointer bg-[#6d584f] text-white hover:bg-[#5a473f]";
+  const inactiveButtonClass = "cursor-pointer bg-gray-200 text-black";
 
   const filteredImages = useMemo(() => {
     if (activeCategory === 'All') {
