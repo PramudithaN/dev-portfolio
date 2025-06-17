@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function FilterableGallery({ images }: Props) {
-  
+
   const categories = useMemo(() => ['All', ...Array.from(new Set(images.map(img => img.category)))], [images]);
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -64,7 +64,7 @@ export default function FilterableGallery({ images }: Props) {
             <img
               src={image.src}
               alt={image.title}
-              className="w-full h-auto object-cover transition-transform duration-300 ease-in-out hover:scale-105" 
+              className="w-full h-auto object-cover transition-transform duration-300 ease-in-out hover:scale-105"
               loading="lazy"
             />
           </div>
