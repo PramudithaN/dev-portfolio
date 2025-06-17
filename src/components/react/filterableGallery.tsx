@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
 
 interface Image {
@@ -12,20 +12,21 @@ interface Props {
 }
 
 export default function FilterableGallery({ images }: Props) {
-  
   const categories = useMemo(() => ['All', ...Array.from(new Set(images.map(img => img.category)))], [images]);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedImageIdx, setSelectedImageIdx] = useState<number | undefined>(undefined);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+
+  const baseButtonClass = "cursor-pointer px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200";
+  const activeButtonClass = "cursor-pointer bg-[#6d584f] text-white hover:bg-[#5a473f]";
+  const inactiveButtonClass = "cursor-pointer bg-gray-200 text-black";
 
   const filteredImages = useMemo(() => {
-    if (activeCategory === 'All') {
-      return images;
-    }
-    return images.filter(image => image.category === activeCategory);
-  }, [activeCategory, images]);
-
-  const baseButtonClass = "px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200";
-  const activeButtonClass = "bg-[#6d584f] text-white hover:bg-[#5a473f]";
-  const inactiveButtonClass = "bg-gray-200 text-black";
+    const imgs = activeCategory === 'All'
+      ? images
+      : images.filter(image => image.category === activeCategory);
+    return imgs.filter(image => !failedImages.has(image.src));
+  }, [activeCategory, images, failedImages]);
 
   const breakpointColumnsObj = useMemo(() => {
     const numImages = filteredImages.length;
@@ -39,6 +40,10 @@ export default function FilterableGallery({ images }: Props) {
       500: Math.min(1, numImages),
     };
   }, [filteredImages.length]);
+
+  const handleImageError = useCallback((src: string) => {
+    setFailedImages(prev => new Set(prev).add(src));
+  }, []);
 
   return (
     <div>
@@ -59,17 +64,49 @@ export default function FilterableGallery({ images }: Props) {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {filteredImages.map((image) => (
-          <div key={image.src} className="overflow-hidden rounded-lg">
+        {filteredImages.map((image, idx) => (
+          <div
+            key={image.src}
+            className="overflow-hidden rounded-lg cursor-pointer"
+            onClick={() => setSelectedImageIdx(idx)}
+          >
             <img
               src={image.src}
               alt={image.title}
-              className="w-full h-auto object-cover transition-transform duration-300 ease-in-out hover:scale-105" 
+              className="w-full h-auto object-cover transition-transform duration-300 ease-in-out hover:scale-105"
               loading="lazy"
+              onError={() => handleImageError(image.src)}
             />
           </div>
         ))}
       </Masonry>
+
+      {/* Popup Modal */}
+      {typeof selectedImageIdx === 'number' && filteredImages[selectedImageIdx] && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-lg"
+          onClick={() => setSelectedImageIdx(undefined)}
+        >
+          <div
+            className="relative backdrop-blur-md rounded-lg  p-4 max-w-3xl w-full"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              className="cursor-pointer absolute top-2 right-2 text-gray-500 hover:text-red-300 bg-white/80 hover:bg-red-100 rounded-full w-6 h-6 flex items-center justify-center text-4xl shadow"
+              onClick={() => setSelectedImageIdx(undefined)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <img
+              src={filteredImages[selectedImageIdx].src}
+              alt={filteredImages[selectedImageIdx].title}
+              className="w-full h-auto object-contain max-h-[70vh] mx-auto"
+              onError={() => handleImageError(filteredImages[selectedImageIdx].src)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
