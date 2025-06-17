@@ -8,40 +8,41 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 const currentUrl = Astro.url;
 
-// --- FINAL Pinterest Configuration ---
 const PINTEREST_USERNAME = 'ad0bep';
-const BOARD_NAMES = ['all-pins', 'manipulations', 'flyers', 'social']; // Add all relevant board names as seen in your Pinterest
+const BOARD_NAMES = ['all-pins', 'manipulations', 'flyers', 'social'];
 
-// --- FINAL Data Fetching Logic using rss-parser ---
 async function fetchPinterestImages() {
   const allImages: { src: string; title: string; category: string }[] = [];
 
   for (const board of BOARD_NAMES) {
     const rssUrl = `https://www.pinterest.com/${PINTEREST_USERNAME}/${board}.rss`;
     try {
-        const feed = await parser.parseURL(rssUrl);
+      const feed = await parser.parseURL(rssUrl);
 
-        if (!feed?.items?.length) {
-            console.warn(`[${board}] Feed parsed, but no items were found.`);
-            continue;
+      if (!feed?.items?.length) {
+        console.warn(`[${board}] Feed parsed, but no items were found.`);
+        continue;
+      }
+
+      feed.items.forEach(item => {
+        if (item.content) {
+          const imgSrcMatch = item.content.match(/<img src="(.*?)"/);
+          if (imgSrcMatch) {
+            let src = imgSrcMatch[1];
+             src = src.replace(/\/\d+x\//, '/originals/');
+
+            allImages.push({
+              src,
+              title: item.title ?? '',
+              category: board,
+            });
+          }
         }
-
-        feed.items.forEach(item => {
-            if (item.content) {
-                const imgSrcMatch = item.content.match(/<img src="(.*?)"/);
-                if (imgSrcMatch) {
-                    allImages.push({
-                        src: imgSrcMatch[1].replace('_236x', '_736x'),
-                        title: item.title ?? '',
-                        category: board,
-                    });
-                }
-            }
-        });
+      });
 
     } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        console.error(`[${board}] Failed to fetch or parse feed. Error: ${errorMsg}`);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error(`[${board}] Failed to fetch or parse feed. Error: ${errorMsg}`);
     }
   }
   return allImages;
