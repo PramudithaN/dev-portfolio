@@ -199,66 +199,110 @@ const repos = await res.json();
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {
-        Array.isArray(repos) && repos.slice(0, 4).map(repo => (
-        <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
-          <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
-          <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
-          {repo.name}
-          <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
-            <FaGithub />
-          </a>
-          </h3>
-          <p class="text-muted-foreground text-sm mb-4">
-          {repo.description || 'No description provided.'}
-          </p>
-          <ul class="mb-4 space-y-1 text-sm">
-          <li class="flex items-center gap-2">
-            <span class="i-lucide-star text-yellow-400"></span>
-            <span>{repo.stargazers_count} stars</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="i-lucide-git-branch text-green-400"></span>
-            <span>{repo.forks_count} forks</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="i-lucide-clock text-blue-400"></span>
-            <span>Updated {new Date(repo.updated_at).toLocaleDateString()}</span>
-          </li>
-          </ul>
-          <div class="flex flex-wrap gap-2 mt-2">
-          {repo.language && (
-            <span
-            class={`rounded px-2 py-0.5 text-xs font-medium flex items-center gap-1
-              ${
-              ({
-                JavaScript: 'bg-yellow-900/40 text-yellow-200',
-                TypeScript: 'bg-blue-900/40 text-blue-200',
-                Python: 'bg-blue-900/40 text-blue-200',
-                Java: 'bg-orange-900/40 text-orange-200',
-                HTML: 'bg-orange-900/40 text-orange-200',
-                CSS: 'bg-indigo-900/40 text-indigo-200',
-                Shell: 'bg-green-900/40 text-green-200',
-                C: 'bg-gray-900/40 text-gray-200',
-                'C++': 'bg-pink-900/40 text-pink-200',
-                PHP: 'bg-indigo-900/40 text-indigo-200',
-                Ruby: 'bg-red-900/40 text-red-200',
-                Go: 'bg-cyan-900/40 text-cyan-200',
-                Rust: 'bg-orange-900/40 text-orange-200',
-                Dart: 'bg-teal-900/40 text-teal-200',
-                Swift: 'bg-orange-900/40 text-orange-200',
-                Kotlin: 'bg-purple-900/40 text-purple-200',
-              } as Record<string, string>)[String(repo.language)] || 'bg-muted text-foreground'
-              }
-            `}
-            >
-            {repo.language}
-            </span>
-          )}
+        (Array.isArray(repos) && repos.length > 0
+          ? repos.slice(0, 4)
+          : [
+              {
+                name: "FraudVista-Frontend",
+                html_url: "https://github.com/PramudithaN/FraudVista-Frontend.git",
+                description: "A Final Year Project | Frontend Application done using React Typescript-Antd | Fraud Detection System",
+                stargazers_count: 0,
+                forks_count: 0,
+                updated_at: new Date().toISOString(),
+                language: "TypeScript",
+                topics: ["Academic"],
+              },
+              {
+                name: "dev-portfolio",
+                html_url: "https://github.com/PramudithaN/dev-portfolio.git",
+                description: "Portfolio website built with Astro, Tailwind CSS, and TypeScript",
+                stargazers_count: 5,
+                forks_count: 1,
+                updated_at: new Date().toISOString(),
+                language: "Astro",
+                topics: ["portfolio"],
+              },
+              {
+                name: "Algorithm_CW_SlidingPuzzle",
+                html_url: "https://github.com/PramudithaN/Algorithm_CW_SlidingPuzzle.git",
+                description: "Finding the Start, End nodes and the shortest path of a maze Using A* algorithm-Coursework IIT",
+                stargazers_count: 3,
+                forks_count: 2,
+                updated_at: new Date().toISOString(),
+                language: "JavaScript",
+                topics: ["Academic"],
+              },
+              {
+                name: "Vapi-Clone_FrontEnd",
+                html_url: "https://github.com/PramudithaN/Vapi-Clone_FrontEnd.git",
+                description: "Chatbot Management UI developed with Html and Css",
+                stargazers_count: 2,
+                forks_count: 0,
+                updated_at: new Date().toISOString(),
+                language: "HTML",
+                topics: ["Project"],
+              },
+            ]
+        ).map(repo => (
+          <div class="flex-1 bg-card border border-border rounded-xl p-6 shadow-lg relative">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-foreground mb-2">
+              <span class="i-lucide-folder-open text-primary" aria-hidden="true"></span>
+              {repo.name}
+              <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="ml-1 i-lucide-github text-lg text-primary" aria-label="GitHub Repo">
+                <FaGithub />
+              </a>
+            </h3>
+            <p class="text-muted-foreground text-sm mb-4">
+              {repo.description || 'No description provided.'}
+            </p>
+            <ul class="mb-4 space-y-1 text-sm">
+              <li class="flex items-center gap-2">
+                <span class="i-lucide-star text-yellow-400"></span>
+                <span>{repo.stargazers_count} stars</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="i-lucide-git-branch text-green-400"></span>
+                <span>{repo.forks_count} forks</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="i-lucide-clock text-blue-400"></span>
+                <span>Updated {new Date(repo.updated_at).toLocaleDateString()}</span>
+              </li>
+            </ul>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {repo.language && (
+                <span
+                  class={`rounded px-2 py-0.5 text-xs font-medium flex items-center gap-1
+                    ${
+                      ({
+                        JavaScript: 'bg-yellow-900/40 text-yellow-200',
+                        TypeScript: 'bg-blue-900/40 text-blue-200',
+                        Python: 'bg-blue-900/40 text-blue-200',
+                        Java: 'bg-orange-900/40 text-orange-200',
+                        HTML: 'bg-orange-900/40 text-orange-200',
+                        CSS: 'bg-indigo-900/40 text-indigo-200',
+                        Shell: 'bg-green-900/40 text-green-200',
+                        C: 'bg-gray-900/40 text-gray-200',
+                        'C++': 'bg-pink-900/40 text-pink-200',
+                        PHP: 'bg-indigo-900/40 text-indigo-200',
+                        Ruby: 'bg-red-900/40 text-red-200',
+                        Go: 'bg-cyan-900/40 text-cyan-200',
+                        Rust: 'bg-orange-900/40 text-orange-200',
+                        Dart: 'bg-teal-900/40 text-teal-200',
+                        Swift: 'bg-orange-900/40 text-orange-200',
+                        Kotlin: 'bg-purple-900/40 text-purple-200',
+                      } as Record<string, string>)[String(repo.language)] || 'bg-muted text-foreground'
+                    }
+                  `}
+                >
+                  {repo.language}
+                </span>
+              )}
+            </div>
+            {repo.topics && repo.topics.map((topic: string) => (
+              <span class="bg-muted px-2 py-0.5 rounded text-xs">{topic}</span>
+            ))}
           </div>
-          {repo.topics && repo.topics.map((topic: string) => (
-          <span class="bg-muted px-2 py-0.5 rounded text-xs">{topic}</span>
-          ))}
-        </div>
         ))
       }
       </div>
@@ -290,7 +334,7 @@ const repos = await res.json();
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
           <p class="text-foreground text-base mb-4">
-            "Thama mama ahuwe na kagenwath ahala feedback ekak dunnama mekat add krnnam, ethakan me tika damme me part eka his thiyanna hitune nathi nisa"
+            "Not Given yet"
           </p>
           <div class="flex items-center gap-3">
             <img src="/Images/avatar.webp" alt="Jane Doe" class="w-15 h-15 rounded-full object-cover" loading="lazy" />
@@ -302,7 +346,7 @@ const repos = await res.json();
         </div>
         <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
           <p class="text-foreground text-base mb-4">
-            "Thama mama ahuwe na kagenwath ahala feedback ekak dunnama mekat add krnnam, ethakan me tika damme me part eka his thiyanna hitune nathi nisa"
+             "Not Given yet"
           </p>
           <div class="flex items-center gap-3">
             <img src="/Images/avatar.webp" alt="John Smith" class="w-15 h-15 rounded-full object-cover" loading="lazy" />
