@@ -24,7 +24,7 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/gallery',
     label: 'gallery',
   },
-   {
+  {
     href: '/contact',
     label: 'contact',
   },
@@ -91,21 +91,21 @@ export const technologies: Technologies = {
     { text: 'CSS', logo: 'mdi:language-css3' },
     { text: 'Astro', logo: 'simple-icons:astro' },
     { text: 'Tailwind CSS', logo: 'mdi:tailwind' },
-    {text:'Figma', logo: 'cib:figma'},
+    { text: 'Figma', logo: 'mdi:figma' },
   ],
   'Development Tools': [
     { text: 'Visual Studio Code', logo: 'mdi:visual-studio-code' },
     { text: 'Git', logo: 'mdi:git' },
   ],
   'Hosting and Cloud Services': [
-    {text:'Render', logo: 'cib:render'},
+    { text: 'Render', logo: 'cib:render' },
     { text: 'Vercel', logo: 'cib:vercel' },
     { text: 'GitHub Pages', logo: 'cib:github' },
   ],
   'Operating Systems': [
     { text: 'Windows', logo: 'mdi:windows' },
-    { text: 'Linux', logo: 'mdi:linux'},
-    
+    { text: 'Linux', logo: 'mdi:linux' },
+
   ],
   'Other Programming Languages and Technologies': [
     { text: 'React', logo: 'mdi:react' },

@@ -15,6 +15,7 @@ type RepoProject = {
     tags?: string[];
     endDate?: string;
     language?: string;
+    liveLink?: string
   };
 };
 
@@ -53,6 +54,7 @@ const repos: RepoProject[] = Array.isArray(reposRaw)
         tags: repo.topics || [],
         endDate: repo.pushed_at,
         language: repo.language,
+        liveLink: repo.homepage || '',
       },
     }))
   : [];
@@ -164,7 +166,19 @@ const repos: RepoProject[] = Array.isArray(reposRaw)
           {project.data.name}
           <Icon name="lucide:github" class="inline h-4 w-4 ml-1 text-muted-foreground" />
           </a>
+          
         </h3>
+         {project.data.liveLink && (
+      <a 
+        href={project.data.liveLink} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="flex items-center gap-1 hover:text-primary transition-colors text-blue-400 text-sm"
+      >
+        <Icon name="lucide:globe" class="h-3 w-3" />
+        Live Demo
+      </a>
+    )}
         </div>
         <p class="text-sm text-muted-foreground mb-4 min-h-[40px]">
         {project.data.description || "No description provided."}

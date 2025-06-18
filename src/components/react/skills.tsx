@@ -25,6 +25,14 @@ import {
   SiDiscord,
   SiSpotify,
   SiBrave,
+  SiPython,
+  SiFigma,
+  SiReact,
+  SiTypescript,
+  SiVercel,
+  SiGithub,
+  SiLinux,
+  SiRender,
 } from 'react-icons/si'
 import { FileCode, LucideAppWindow, Code } from 'lucide-react'
 
@@ -53,6 +61,15 @@ const iconMap: { [key: string]: IconType } = {
   'mdi:visual-studio-code': FileCode,
   'mdi:windows': LucideAppWindow,
   'mdi:visual-studio': Code,
+  'mdi:language-python': SiPython,
+  'mdi:figma': SiFigma,
+  'mdi:language-typescript': SiTypescript,
+  'mdi:react': SiReact, 
+  'mdi:language-java': SiJavascript, 
+  'cib:vercel':SiVercel,
+  'cib:github': SiGithub,
+  'mdi:linux':SiLinux,
+  'cib:render': SiRender
 }
 
 const categories = Object.keys(technologies)
