@@ -89,14 +89,14 @@ const repos: RepoProject[] = Array.isArray(reposRaw)
     </div>
   
     <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-      {(repos.length > 0 ? repos : [
-      {
+     {(repos.length > 0 ? repos : [
+    {
         id: 1,
         data: {
-        name: "Sample Project",
+        name: "FraudVista-Frontend",
         image: "/default-project-image.png",
-        description: "This is a sample project shown as fallback.",
-        tags: ["astro", "demo"],
+        description: "A Final Year Project | Frontend Application done using React Typescript-Antd | Fraud Detection System",
+        tags: [],
         endDate: "2024-01-01T00:00:00Z",
         language: "TypeScript",
         },
@@ -104,12 +104,56 @@ const repos: RepoProject[] = Array.isArray(reposRaw)
       {
         id: 2,
         data: {
-        name: "Another Example",
+        name: "Algorithm_CW_SlidingPuzzle",
         image: "/default-project-image.png",
-        description: "Another hardcoded project for fallback display.",
-        tags: ["fallback", "example"],
+        description: "Finding the Start, End nodes and the shortest path of a maze Using A* algorithm-Coursework IIT",
+        tags: [],
         endDate: "2023-12-15T00:00:00Z",
-        language: "JavaScript",
+        language: "Java",
+        },
+      },
+       {
+        id: 3,
+        data: {
+        name: "ai-english-tutor",
+        image: "/default-project-image.png",
+        description: "A Voice assistant chatbot that works as an openAi",
+        tags: ["Typescript", "Node"],
+        endDate: "2025-06-18T00:00:00Z",
+        language: "Javascript",
+        },
+      },
+      {
+        id: 4,
+        data: {
+        name: "dev-portfolio",
+        image: "/default-project-image.png",
+        description: "Portfolio website built with Astro, Tailwind CSS, and TypeScript",
+        tags: ["Typescript", "Tailwind"],
+        endDate: "2025-06-17T00:00:00Z",
+        language: "Astro",
+        },
+      },
+         {
+        id: 5,
+        data: {
+        name: "Concurrent-Programming",
+        image: "/default-project-image.png",
+        description: "Handling Thread concurrency concepts using java - Coursework IIT",
+        tags: [],
+        endDate: "2025-01-09T00:00:00Z",
+        language: "Java",
+        },
+      },
+       {
+        id: 6,
+        data: {
+        name: "Vapi-Clone_FrontEnd",
+        image: "/default-project-image.png",
+        description: "Chatbot Management UI developed with Html and Css",
+        tags: ["CSS"],
+        endDate: "2024-06-23T00:00:00Z",
+        language: "HTML",
         },
       },
       ]).map((project: RepoProject, _: number) => (
