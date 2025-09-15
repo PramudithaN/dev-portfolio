@@ -80,6 +80,7 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <Button
+    className='cursor-pointer'
       id="theme-toggle"
       variant="secondary"
       size="icon"
