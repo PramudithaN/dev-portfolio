@@ -344,12 +344,19 @@ const repos = await res.json();
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
-          <p class="text-foreground text-base mb-4">
+          <p id="testimonial1-text" class="text-foreground text-base mb-4 line-clamp-3 transition-all duration-300 overflow-hidden">
            "I had the pleasure of working with Pramuditha during my time at LOLC Technologies, and I can honestly say he’s one of the most well rounded professionals I’ve met. Although his role was as a Software Engineer (FE), he quickly mastered the domain after joining and went beyond what was expected.
 What makes him stand out is not just his technical skills in FE development, but also his strong eye for design, UI/UX, and even graphics. I've noticed that he has a rare ability to bridge the gap between development, design, and the user experience which is very crucial.
 Another quality I truly admire in Pramuditha is how collaborative he is. In my opinion, many developers tend to prefer working in isolation, but he performs very well in teamwork. I've seen how he actively engages with BAs and QAs, adding a strong sense of collaboration within the team. On a personal note, I’ve also sought his insights for some of my own projects, especially around UI/UX, and his feedback was not only helpful but also showed how much thought he puts into creating meaningful user experiences.
 Pramuditha is someone who brings both technical excellence and a human touch to his work, and any team would be lucky to have him."
           </p>
+          <button
+            type="button"
+            class="px-3 py-1 rounded-md text-xs font-medium bg-gray-200 text-black hover:bg-gray-300 transition-colors duration-200 mb-2"
+            aria-expanded="false"
+            aria-controls="testimonial1-text"
+            onclick="const p1=document.getElementById('testimonial1-text'); const expanded1=p1.classList.toggle('line-clamp-3'); this.setAttribute('aria-expanded', expanded1); this.textContent=expanded1?'Show less':'Show more';"
+          >Show more</button>
           <div class="flex items-center gap-3">
             <img src="/Images/avatar.webp" alt="Thavinya Wijesinghe" class="w-15 h-15 rounded-full object-cover" loading="lazy" />
             <div>
@@ -359,11 +366,18 @@ Pramuditha is someone who brings both technical excellence and a human touch to 
           </div>
         </div>
         <div class="bg-card border border-border rounded-xl p-6 shadow-lg">
-          <p class="text-foreground text-base mb-4">
+          <p id="testimonial2-text" class="text-foreground text-base mb-4 line-clamp-3 transition-all duration-300 overflow-hidden">
            "I’ve had the pleasure of working with Pramuditha on several projects, and I can confidently say he is one of the most reliable and talented professionals I’ve collaborated with. His expertise in graphic design and front-end development brings both creativity and technical precision to every project.
 What stood out to me most is his flexibility and willingness to adapt to changing requirements without ever compromising on quality. He takes full ownership of his work, consistently meeting deadlines while ensuring the output exceeds expectations. Beyond his technical skills, Pramuditha is a true team player who communicates well and makes collaboration seamless.
 I would highly recommend Pramuditha to anyone looking for someone who can deliver outstanding design and development work while also being dependable and easy to work with."
           </p>
+          <button
+            type="button"
+            class="px-3 py-1 rounded-md text-xs font-medium bg-gray-200 text-black hover:bg-gray-300 transition-colors duration-200 mb-2"
+            aria-expanded="false"
+            aria-controls="testimonial2-text"
+            onclick="const p2=document.getElementById('testimonial2-text'); const expanded2=p2.classList.toggle('line-clamp-3'); this.setAttribute('aria-expanded', expanded2); this.textContent=expanded2?'Show less':'Show more';"
+          >Show more</button>
           <div class="flex items-center gap-3">
             <img src="/Images/avatar.webp" alt="Rishara Perera" class="w-15 h-15 rounded-full object-cover" loading="lazy" />
             <div>
