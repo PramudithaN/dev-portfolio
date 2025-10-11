@@ -7,7 +7,9 @@ const currentUrl = Astro.url;
 ---
 
 <Layout canonicalUrl={currentUrl}>
-  <head>
+  <head slot="head">
+    <title>Pramuditha Nadun | AI Research Portfolio</title>
+    <meta name="description" content="Final year AI researcher focusing on explainable deep learning models for crude oil price prediction. Explore my research projects and technical expertise." />
     <!-- Importing fonts from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,7 +40,7 @@ const currentUrl = Astro.url;
       >
         PRAMUDITHA
       </h2>
-      <p class="text-white/70 text-sm">Associate Software Engineer</p>
+      <p class="text-white/70 text-sm">AI Researcher & Associate Software Engineer</p>
     </div>
 
     <!-- Interaction Layer (sits on top of everything) -->
