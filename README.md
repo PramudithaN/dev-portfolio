@@ -13,7 +13,7 @@
 ## 📸 Preview
 
 **Hero**
-![Hero](public/Images/Pramuditha.webp)
+![Hero](public/Images/HomePage.jpg)
 
 ---
 
