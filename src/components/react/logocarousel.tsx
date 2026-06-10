@@ -36,6 +36,41 @@ const logoWorks = [
         guideImage: "/Images/CE.webp",
         guideText: "This logo features a stylized cloud with elegant curves, symbolizing a fresh and airy atmosphere. The design is perfect for a salon, conveying beauty and sophistication."
     },
+    {
+        title: "iHub",
+        description: "A bold brand identity crafted for a finance company, merging trust with forward-thinking vision.",
+        image: "/Images/Ihub Final des.png",
+        guideImage: "/Images/Ihub Final des.png",
+        guideText: "Designed for a finance company, the iHub logo balances professionalism with modernity. The clean geometric forms and confident lettermark communicate financial reliability, growth, and a client-first ethos."
+    },
+    {
+        title: "HiTech",
+        description: "A striking logo designed for HiTech, an educational institute shaping the next generation of tech-savvy minds.",
+        image: "/Images/n3-HiTech-LogoRB.png",
+        guideImage: "/Images/n3-HiTech-LogoRB.png",
+        guideText: "The HiTech logo uses a bold red and black palette to convey energy, ambition, and academic excellence. The strong letterforms reflect the institute's commitment to high-quality, technology-focused education."
+    },
+    {
+        title: "Mirihane Bodima",
+        description: "A fun, vibrant logo designed for a Facebook community page dedicated to sharing laughs and local memes.",
+        image: "/Images/s-Mirihane Bodima.png",
+        guideImage: "/Images/s-Mirihane Bodima.png",
+        guideText: "Built for a Facebook meme page, Mirihane Bodima's logo captures a playful and relatable personality. The design leans into community energy and humor, making it instantly recognizable and share-worthy across social feeds."
+    },
+    {
+        title: "LA Shine Pro",
+        description: "A crisp, professional logo designed for a USA-based cleaning company that takes pride in spotless results.",
+        image: "/Images/White-LA Shine Pro Logo.png",
+        guideImage: "/Images/White-LA Shine Pro Logo.png",
+        guideText: "LA Shine Pro's logo radiates cleanliness, efficiency, and professionalism. The sleek white palette and polished letterforms mirror the company's dedication to delivering immaculate cleaning services across the United States."
+    },
+    {
+        title: "HiTech Reference",
+        description: "An alternate logo concept for HiTech, the educational institute — exploring a fresh visual direction for the same brand.",
+        image: "/Images/Reference HT.png",
+        guideImage: "/Images/Reference HT.png",
+        guideText: "This reference design was created as a secondary concept for the HiTech educational institute. It explores a refined typographic direction while staying true to the brand's values of knowledge, precision, and technological excellence."
+    },
 ];
 
 export default function LogoCarousel() {
