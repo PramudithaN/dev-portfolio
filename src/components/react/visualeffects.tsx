@@ -19,6 +19,8 @@ export default function VisualEffects() {
         { src: 'https://www.youtube.com/embed/SJLsMEyUOSE', title: 'Project 4' },
         { src: 'https://www.youtube.com/embed/01reidY65cs', title: 'Project 5' },
         { src: 'https://www.youtube.com/embed/pCPfKqmUD1c', title: 'Project 6' },
+        { src: 'https://www.youtube.com/embed/Mf9_zYrLzBY', title: 'Project 7' },
+        { src: 'https://www.youtube.com/embed/VW9Fo3Bu_3w', title: 'Project 8' },
 
     ];
 
