@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
-> Personal portfolio website of **Pramuditha Nadun** — AI Researcher & Associate Software Engineer based in Sri Lanka.
+> Personal portfolio website of **Pramuditha Nadun** - AI Researcher & Associate Software Engineer based in Sri Lanka.
 
 ---
 
