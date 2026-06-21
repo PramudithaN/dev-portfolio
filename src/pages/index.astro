@@ -24,10 +24,17 @@ const currentUrl = Astro.url;
   >
     <!-- Layer for the overlapping images -->
     <div class="image-layers absolute inset-0 z-10">
-      <!-- Black and White Image (Bottom Layer) -->
-      <div class="image-bg bw-image"></div>
-      <!-- Color Image (Top Layer, clipped) -->
-      <div class="image-bg color-image"></div>
+      <!-- Designer layers (Bottom layers, revealed when developer container is clipped) -->
+      <div class="designer-hero-container absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="image-bg des-bg-layer"></div>
+        <div class="image-bg des-char-layer"></div>
+      </div>
+      
+      <!-- Developer layers (Top layers, clipped based on mouse cursor position) -->
+      <div class="developer-hero-container absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="image-bg dev-bg-layer"></div>
+        <div class="image-bg dev-char-layer"></div>
+      </div>
     </div>
 
     <!-- Central Name/Logo -->
@@ -238,25 +245,47 @@ const currentUrl = Astro.url;
       height: 100%;
       background-size: cover;
       background-position: center;
-      /* Add a transition for the parallax movement */
-      transition: background-position 0.1s ease-out;
+      /* Smooth GPU transforms for parallax motion */
+      transform: scale(1.08) translate3d(var(--tx, 0px), var(--ty, 0px), 0);
+      will-change: transform;
     }
 
-    /* !! IMPORTANT !! Image URLs for the backgrounds */
-    .color-image {
-      /* This is your full-color image */
-      background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('/Images/Developer.webp');
+    /* Designer Containers & Layers */
+    .designer-hero-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    
+    .des-bg-layer {
+      background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('/Images/des_bg.png');
+      z-index: 1;
+    }
+    
+    .des-char-layer {
+      background-image: url('/Images/des-c.png');
       z-index: 2;
-      /* CORE LOGIC: Initially show only the left 50% of this top image */
+    }
+
+    /* Developer Containers & Layers */
+    .developer-hero-container {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      /* CORE LOGIC: Initially show only the left 50% of this top container */
       clip-path: inset(0 50% 0 0);
       /* Add transition for the reset animation on mouseleave */
       transition: clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
-
-    .bw-image {
-      /* This is your black-and-white image, fully visible underneath */
-      background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('/Images/Designer.webp');
+    
+    .dev-bg-layer {
+      background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('/Images/dev_bg.png');
       z-index: 1;
+    }
+    
+    .dev-char-layer {
+      background-image: url('/Images/dev-c.png');
+      z-index: 2;
     }
     /* --- End of important section --- */
 
@@ -343,65 +372,89 @@ const currentUrl = Astro.url;
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Explicitly type the elements as HTMLElement or null
-      const colorImage: HTMLElement | null = document.querySelector('.color-image');
-      const bwImage: HTMLElement | null = document.querySelector('.bw-image');
+      const devContainer: HTMLElement | null = document.querySelector('.developer-hero-container');
+      const desBg: HTMLElement | null = document.querySelector('.des-bg-layer');
+      const desChar: HTMLElement | null = document.querySelector('.des-char-layer');
+      const devBg: HTMLElement | null = document.querySelector('.dev-bg-layer');
+      const devChar: HTMLElement | null = document.querySelector('.dev-char-layer');
       const pageContainer: HTMLElement | null = document.querySelector('.page-container');
       
-      // The guard clause correctly handles the case where elements might not be found
-      if (!colorImage || !bwImage || !pageContainer) return;
+      if (!devContainer || !pageContainer) return;
 
-      const parallaxIntensity = 20; // How many pixels the image will move.
+      // Parallax intensities (max translation in pixels)
+      const bgIntensity = 12;
+      const charIntensity = 28;
+      
       // A smaller value creates a more noticeable delay/smoothing effect.
-      const lerpFactor = 0.04; 
+      const lerpFactor = 0.05; 
 
       let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
       let currentX = window.innerWidth / 2;
+      let currentY = window.innerHeight / 2;
       let isMouseOver = false;
 
       // --- 1. Animation Loop ---
       function animate() {
-        // If mouse is not over the container, smoothly move back to center
         if (!isMouseOver) {
           targetX = window.innerWidth / 2;
+          targetY = window.innerHeight / 2;
         }
 
         // Lerp for smooth motion
         currentX += (targetX - currentX) * lerpFactor;
+        currentY += (targetY - currentY) * lerpFactor;
 
         // --- 2. Reveal Logic ---
         const clipPercentage = (currentX / window.innerWidth) * 100;
-        // Remove transition to let JS handle the animation smoothly
-        if (colorImage) {
-          colorImage.style.transition = 'none';
-          colorImage.style.clipPath = `inset(0 ${100 - clipPercentage}% 0 0)`;
+        if (devContainer) {
+          devContainer.style.transition = isMouseOver ? 'none' : 'clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+          devContainer.style.clipPath = `inset(0 ${100 - clipPercentage}% 0 0)`;
         }
 
-        // --- 3. Horizontal-Only Parallax Logic ---
-        const xOffset = (currentX / window.innerWidth) - 0.5;
-        const xParallax = -xOffset * parallaxIntensity;
-        const parallaxPosition = `calc(50% + ${xParallax}px) 50%`; // Y is always 50%
-        
-        if (colorImage) colorImage.style.backgroundPosition = parallaxPosition;
-        if (bwImage) bwImage.style.backgroundPosition = parallaxPosition;
+        // --- 3. Parallax Logic ---
+        const ndcX = (currentX / window.innerWidth) - 0.5;
+        const ndcY = (currentY / window.innerHeight) - 0.5;
+
+        // Calculate translation values (moving opposite to mouse direction for depth)
+        const bgTx = -ndcX * bgIntensity;
+        const bgTy = -ndcY * bgIntensity;
+        const charTx = -ndcX * charIntensity;
+        const charTy = -ndcY * charIntensity;
+
+        // Set CSS Custom Properties for high-performance transforms
+        if (desBg) {
+          desBg.style.setProperty('--tx', `${bgTx}px`);
+          desBg.style.setProperty('--ty', `${bgTy}px`);
+        }
+        if (desChar) {
+          desChar.style.setProperty('--tx', `${charTx}px`);
+          desChar.style.setProperty('--ty', `${charTy}px`);
+        }
+        if (devBg) {
+          devBg.style.setProperty('--tx', `${bgTx}px`);
+          devBg.style.setProperty('--ty', `${bgTy}px`);
+        }
+        if (devChar) {
+          devChar.style.setProperty('--tx', `${charTx}px`);
+          devChar.style.setProperty('--ty', `${charTy}px`);
+        }
         
         requestAnimationFrame(animate);
       }
       
       // --- 4. Event Listeners ---
-      // Explicitly type the event as a MouseEvent to access clientX
       pageContainer.addEventListener('mousemove', (e: MouseEvent) => {
         targetX = e.clientX;
+        targetY = e.clientY;
       });
       
       pageContainer.addEventListener('mouseenter', () => {
-          isMouseOver = true;
+        isMouseOver = true;
       });
 
       pageContainer.addEventListener('mouseleave', () => {
-          isMouseOver = false;
-          // Re-apply CSS transition for smooth reset animation
-          colorImage.style.transition = 'clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+        isMouseOver = false;
       });
 
       // Start the animation loop
