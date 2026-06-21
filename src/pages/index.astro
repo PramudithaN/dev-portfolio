@@ -272,10 +272,13 @@ const currentUrl = Astro.url;
       position: absolute;
       inset: 0;
       z-index: 2;
-      /* CORE LOGIC: Initially show only the left 50% of this top container */
-      clip-path: inset(0 50% 0 0);
-      /* Add transition for the reset animation on mouseleave */
-      transition: clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      /* CORE LOGIC: Soft split using gradient mask */
+      -webkit-mask-image: linear-gradient(to right, black calc(50% - 8vw), transparent calc(50% + 8vw));
+      mask-image: linear-gradient(to right, black calc(50% - 8vw), transparent calc(50% + 8vw));
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
     }
     
     .dev-bg-layer {
@@ -405,11 +408,12 @@ const currentUrl = Astro.url;
         currentX += (targetX - currentX) * lerpFactor;
         currentY += (targetY - currentY) * lerpFactor;
 
-        // --- 2. Reveal Logic ---
+        // --- 2. Reveal Logic (Soft split using gradient mask) ---
         const clipPercentage = (currentX / window.innerWidth) * 100;
         if (devContainer) {
-          devContainer.style.transition = isMouseOver ? 'none' : 'clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
-          devContainer.style.clipPath = `inset(0 ${100 - clipPercentage}% 0 0)`;
+          const maskVal = `linear-gradient(to right, black calc(${clipPercentage}% - 8vw), transparent calc(${clipPercentage}% + 8vw))`;
+          devContainer.style.setProperty('-webkit-mask-image', maskVal);
+          devContainer.style.setProperty('mask-image', maskVal);
         }
 
         // --- 3. Parallax Logic ---
