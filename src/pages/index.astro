@@ -14,7 +14,7 @@ const currentUrl = Astro.url;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Space+Mono:wght@400;700&display=swap"
+           href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -74,14 +74,14 @@ const currentUrl = Astro.url;
       </a>
 
       <!-- Mobile: Show both buttons under the title/role -->
-      <div class="md:hidden absolute left-1/2 top-[calc(60%+2rem)] -translate-x-1/2 flex gap-4 z-30">
+      <div class="mobile-btn-container md:hidden absolute left-1/2 top-[calc(60%+2rem)] -translate-x-1/2 flex gap-4 z-30">
         <a href="/designer" class="group">
-          <Button variant="outline" className="font-bold px-6 py-2">
+          <Button variant="outline" className="font-custom font-bold px-6 py-2">
         DESIGNER
           </Button>
         </a>
         <a href="/developer" class="group">
-          <Button variant="outline" className="font-bold px-6 py-2">
+                  <Button variant="outline" className="font-bold px-6 py-2">
         &lt;DEVELOPER&gt;
           </Button>
         </a>
@@ -229,12 +229,8 @@ const currentUrl = Astro.url;
   </main>
 
   <style>
-    /* Custom fonts */
-    .font-custom {
-      font-family: 'Poppins', sans-serif;
-    }
-    .font-mono {
-      font-family: 'Space Mono', monospace;
+    :global(.font-mono) {
+     font-family: 'Space Mono', monospace;
     }
 
     /* Base styles for the image layers */
@@ -248,6 +244,13 @@ const currentUrl = Astro.url;
       /* Smooth GPU transforms for parallax motion */
       transform: scale(1.08) translate3d(var(--tx, 0px), var(--ty, 0px), 0);
       will-change: transform;
+      /* Transition for smooth background blur and brightness adjustment */
+      transition: filter 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Blur background ONLY when hovering over the cta buttons (or mobile navigation buttons) */
+    .page-container:has(.cta:hover, .mobile-btn-container a:hover) .image-bg {
+      filter: blur(8px) brightness(0.6);
     }
 
     /* Designer Containers & Layers */
@@ -272,13 +275,10 @@ const currentUrl = Astro.url;
       position: absolute;
       inset: 0;
       z-index: 2;
-      /* CORE LOGIC: Soft split using gradient mask */
-      -webkit-mask-image: linear-gradient(to right, black calc(50% - 8vw), transparent calc(50% + 8vw));
-      mask-image: linear-gradient(to right, black calc(50% - 8vw), transparent calc(50% + 8vw));
-      -webkit-mask-size: 100% 100%;
-      mask-size: 100% 100%;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
+      /* CORE LOGIC: Initially show only the left 50% of this top container */
+      clip-path: inset(0 50% 0 0);
+      /* Add transition for the reset animation on mouseleave */
+      transition: clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     .dev-bg-layer {
@@ -328,7 +328,7 @@ const currentUrl = Astro.url;
 
     /* Main title styles */
     .title {
-      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 900;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -408,12 +408,11 @@ const currentUrl = Astro.url;
         currentX += (targetX - currentX) * lerpFactor;
         currentY += (targetY - currentY) * lerpFactor;
 
-        // --- 2. Reveal Logic (Soft split using gradient mask) ---
+        // --- 2. Reveal Logic ---
         const clipPercentage = (currentX / window.innerWidth) * 100;
         if (devContainer) {
-          const maskVal = `linear-gradient(to right, black calc(${clipPercentage}% - 8vw), transparent calc(${clipPercentage}% + 8vw))`;
-          devContainer.style.setProperty('-webkit-mask-image', maskVal);
-          devContainer.style.setProperty('mask-image', maskVal);
+          devContainer.style.transition = isMouseOver ? 'none' : 'clip-path 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+          devContainer.style.clipPath = `inset(0 ${100 - clipPercentage}% 0 0)`;
         }
 
         // --- 3. Parallax Logic ---
