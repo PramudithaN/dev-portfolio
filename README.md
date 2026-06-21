@@ -33,16 +33,16 @@ The project is fully SSR-enabled via `@astrojs/node`, deployed on **Vercel**, an
 
 ## ✨ Features
 
-- 🚀 **Blazing fast** — Built with Astro.js for optimal loading speeds
-- 🎨 **Modern UI** — Dark/red cinematic design with Tailwind CSS
-- 🌙 **Dark mode** — Seamless light/dark theme switching
-- 📱 **Fully responsive** — Works great on all screen sizes
-- 🔍 **SEO optimized** — Structured data and meta tags
-- 💼 **GitHub project cards** — Live data from the GitHub API
-- 🖼️ **Designer portfolio** — Logo designs, VFX, and gallery
-- 📋 **Experience timeline** — Work history with tech stack badges
-- 💬 **Testimonials** — Collapsible testimonial section
-- 📄 **Resume download** — Direct PDF download
+- 🚀 **Blazing fast** - Built with Astro.js for optimal loading speeds
+- 🎨 **Modern UI** - Dark/red cinematic design with Tailwind CSS
+- 🌙 **Dark mode** - Seamless light/dark theme switching
+- 📱 **Fully responsive** - Works great on all screen sizes
+- 🔍 **SEO optimized** - Structured data and meta tags
+- 💼 **GitHub project cards** - Live data from the GitHub API
+- 🖼️ **Designer portfolio** - Logo designs, VFX, and gallery
+- 📋 **Experience timeline** - Work history with tech stack badges
+- 💬 **Testimonials** - Collapsible testimonial section
+- 📄 **Resume download** - Direct PDF download
 
 ---
 
@@ -155,7 +155,7 @@ The site detects the user's system preference on first load and allows manual to
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
