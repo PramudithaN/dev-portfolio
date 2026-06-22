@@ -77,6 +77,36 @@ export default function LogoCarousel() {
     const [current, setCurrent] = useState(0);
     const [popup, setPopup] = useState<number | null>(null);
     const [expanded, setExpanded] = useState(false);
+    const [isDark, setIsDark] = useState(true);
+
+    useEffect(() => {
+        const checkTheme = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+        checkTheme();
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    checkTheme();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    const getLogoImage = (work: typeof logoWorks[0], key: 'image' | 'guideImage') => {
+        if (work.title === "Adobe Prama") {
+            return isDark ? "/Images/AP-Logo.webp" : "/Images/drk-AP.webp";
+        }
+        return work[key];
+    };
 
     const visibleCards = expanded ? logoWorks : logoWorks.slice(0, 4);
 
@@ -134,7 +164,7 @@ export default function LogoCarousel() {
                             key={work.title}
                         >
                             <img
-                                src={work.image}
+                                src={getLogoImage(work, 'image')}
                                 alt={work.title}
                                 className="w-full h-40 object-cover rounded-lg cursor-pointer"
                                 onClick={() => setPopup(expanded ? idx : idx)}
@@ -198,7 +228,7 @@ export default function LogoCarousel() {
                                         }}
                                     >
                                         <img
-                                            src={logoWorks[popup].guideImage}
+                                            src={getLogoImage(logoWorks[popup], 'guideImage')}
                                             alt={logoWorks[popup].title + ' guide'}
                                             className="w-full object-contain"
                                             style={{

@@ -4,3 +4,47 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/White-AP.png" />
 <meta name="apple-mobile-web-app-title" content="Pramuditha Nadun" />
 <link rel="manifest" href="/site.webmanifest" />
+
+<script is:inline>
+  (function() {
+    function updateFavicon(isDark) {
+      const faviconPng = document.querySelector('link[type="image/png"]');
+      const shortcutIcon = document.querySelector('link[rel="shortcut icon"]');
+      const appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+
+      const darkLogo = '/White-AP.png';
+      const lightLogo = '/Images/drk-AP.webp';
+
+      const currentLogo = isDark ? darkLogo : lightLogo;
+
+      if (faviconPng) faviconPng.setAttribute('href', currentLogo);
+      if (shortcutIcon) shortcutIcon.setAttribute('href', currentLogo);
+      if (appleIcon) appleIcon.setAttribute('href', currentLogo);
+    }
+
+    // Set up observer for class changes on documentElement
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          const isDark = document.documentElement.classList.contains('dark');
+          updateFavicon(isDark);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // Run initially
+    const isDark = document.documentElement.classList.contains('dark');
+    updateFavicon(isDark);
+
+    // Support Astro Page Swaps
+    document.addEventListener('astro:after-swap', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      updateFavicon(isDark);
+    });
+  })();
+</script>
