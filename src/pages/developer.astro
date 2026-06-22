@@ -359,7 +359,82 @@ const repos = await res.json();
       </Link>
       </div>
     </section>
-   
+
+    <!-- Beyond the Code -->
+    <section class="relative" aria-labelledby="beyond-the-code-title">
+      <h2
+        id="beyond-the-code-title"
+        class="font-custom text-foreground text-2xl font-bold mb-2"
+        title="beyond the code"
+        aria-label="beyond the code"
+        role="heading"
+      >
+        Beyond the Code
+      </h2>
+      <p class="text-muted-foreground text-sm mb-6" aria-label="beyond the code description">
+        What I enjoy doing when I am not writing code or developing software.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Graphic Designer Card -->
+        <div class="group bg-card hover:bg-accent/5 border border-border hover:border-primary/30 rounded-xl p-6 shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+              <Icon name="lucide:palette" class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">Graphic Designer</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Crafting visually engaging layouts, digital art, and layouts. I love blending aesthetic beauty with clear functionality to tell stories visually.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-1.5 text-xs text-primary font-medium">
+            <a href="/designer" class="flex items-center gap-1 hover:underline">
+              <span>View design work</span>
+              <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hiker Card -->
+        <div class="group bg-card hover:bg-accent/5 border border-border hover:border-primary/30 rounded-xl p-6 shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="h-12 w-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 text-green-400 group-hover:bg-green-500 group-hover:text-white transition-all duration-300">
+              <Icon name="lucide:mountain" class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">Avid Hiker</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Trekking through mountains, exploring scenic wilderness trails, and connecting with nature. Hiking feeds my curiosity and builds resilience.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-1.5 text-xs text-primary font-medium">
+            <a href="/hikes" class="flex items-center gap-1 hover:underline">
+              <span>View photo gallery</span>
+              <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- VFX Enthusiast Card -->
+        <div class="group bg-card hover:bg-accent/5 border border-border hover:border-primary/30 rounded-xl p-6 shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+              <Icon name="lucide:clapperboard" class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">VFX Enthusiast</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Fascinated by CGI, digital compositing, and cinematic visual effects. Exploring creative editing techniques to bring imaginative scenes to life.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-1.5 text-xs text-primary font-medium">
+            <a href="/designer#visual-effects-title" class="flex items-center gap-1 hover:underline">
+              <span>See VFX creations</span>
+              <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Testimonials -->
     <section class="relative" aria-labelledby="testimonials-title">
       <h2
