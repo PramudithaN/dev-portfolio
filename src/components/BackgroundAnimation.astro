@@ -202,7 +202,7 @@ const { type = 'stars' } = Astro.props;
             const char = col.snippet[safeIndex];
 
             const fraction = j / col.trailLength;
-            const opacity = (1 - fraction) * (isDarkTheme ? 0.08 : 0.09);
+            const opacity = (1 - fraction) * (isDarkTheme ? 0.02 : 0.05);
 
             if (j === 0) {
               // Head character: subtle highlight
