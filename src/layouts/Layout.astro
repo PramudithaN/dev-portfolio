@@ -8,6 +8,7 @@ import Navbar from '@/components/react/navbar'
 import { SITE } from '@/consts'
 import { cn } from '@/lib/utils'
 import Posthog from '@/components/Posthog.astro'
+import BackgroundAnimation from '@/components/BackgroundAnimation.astro'
 
 const {
   isWide = false,
@@ -48,9 +49,10 @@ const {
     <Posthog />
   </Head>
   <body>
+    <BackgroundAnimation />
     <div class="flex h-fit min-h-screen w-full flex-col gap-y-4 sm:gap-y-6 font-sans">
       <Navbar client:load />
-      <main class="flex grow flex-col bg-background mt-16 lg:mt-6" aria-label="Main content" role="main">
+      <main class="flex grow flex-col bg-transparent mt-16 lg:mt-6" aria-label="Main content" role="main">
         <div
           class={cn(
             'mx-auto flex grow flex-col gap-y-4 sm:gap-y-6 px-3 py-10 sm:py-16 md:py-20 lg:py-24 sm:px-6 lg:px-8',
