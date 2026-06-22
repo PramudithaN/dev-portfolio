@@ -33,6 +33,7 @@ const currentUrl = Astro.url;
       <!-- Developer layers (Top layers, clipped based on mouse cursor position) -->
       <div class="developer-hero-container absolute inset-0 overflow-hidden pointer-events-none">
         <div class="image-bg dev-bg-layer"></div>
+        <canvas id="dev-coding-canvas" class="image-bg dev-coding-layer"></canvas>
         <div class="image-bg dev-char-layer"></div>
       </div>
     </div>
@@ -286,6 +287,11 @@ const currentUrl = Astro.url;
       z-index: 1;
     }
     
+    .dev-coding-layer {
+      z-index: 1.5;
+      pointer-events: none;
+    }
+    
     .dev-char-layer {
       background-image: url('/Images/dev-c.webp');
       z-index: 2;
@@ -397,8 +403,122 @@ const currentUrl = Astro.url;
       let currentY = window.innerHeight / 2;
       let isMouseOver = false;
 
+      // --- Coding Rain Animation Setup ---
+      const devCodingCanvas = document.getElementById('dev-coding-canvas') as HTMLCanvasElement | null;
+      let ctx = devCodingCanvas ? devCodingCanvas.getContext('2d') : null;
+      let canvasWidth = window.innerWidth;
+      let canvasHeight = window.innerHeight;
+
+      const codeSnippets = [
+        "const price = await predictPrice(model, data);",
+        "import { LSTM, Dense } from '@/components/deep-learning';",
+        "tf.layers.lstm({ units: 128, returnSequences: true })",
+        "const loss = tf.losses.meanSquaredError(labels, predictions);",
+        "model.fit(xTrain, yTrain, { epochs: 200, batchSize: 32 });",
+        "export default async function trainModel(dataset) {",
+        "const attention = selfAttention(query, key, value);",
+        "return tf.tidy(() => { const y = model.predict(x); });",
+        "const shapValues = explainModel(lstmModel, inputData);",
+        "const currentTheme = document.documentElement.classList.contains('dark');",
+        "function explainPredictions(shapValues) { return shapValues.map(v => v.abs()); }",
+        "const nextPrice = lstmCell.forward(inputFeature);",
+        "const optimizer = tf.train.adam(learningRate);"
+      ];
+
+      interface Column {
+        x: number;
+        rowOffset: number;
+        stepInterval: number;
+        lastStepTime: number;
+        snippet: string;
+        trailLength: number;
+      }
+
+      let columns: Column[] = [];
+
+      function initColumns(width: number, height: number) {
+        const spacing = 22; // Slightly wider spacing for clean look
+        const fontSize = 15; // Slightly larger font size for legibility
+        const colCount = Math.ceil(width / spacing);
+        columns = [];
+        
+        for (let i = 0; i < colCount; i++) {
+          const snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+          const trailLength = Math.floor(Math.random() * 12) + 8; // 8 to 20 characters
+          
+          columns.push({
+            x: i * spacing,
+            rowOffset: Math.floor(Math.random() * (height / fontSize + 10)) - 10,
+            stepInterval: Math.random() * 80 + 45, // 45ms to 125ms per step
+            lastStepTime: performance.now() - Math.random() * 500, // Stagger step start times
+            snippet,
+            trailLength
+          });
+        }
+      }
+
+      function drawCodingRain(ctx: CanvasRenderingContext2D, width: number, height: number, now: number) {
+        ctx.clearRect(0, 0, width, height);
+        
+        ctx.font = '15px "Space Mono", monospace';
+        ctx.textBaseline = 'top';
+        const fontSize = 15;
+        const totalRows = Math.ceil(height / fontSize);
+
+        for (let i = 0; i < columns.length; i++) {
+          const col = columns[i];
+          
+          // Update row position based on stepInterval
+          if (now - col.lastStepTime > col.stepInterval) {
+            col.rowOffset++;
+            col.lastStepTime = now;
+            
+            // If the trail has fully moved off screen, reset the column
+            if (col.rowOffset - col.trailLength > totalRows) {
+              col.rowOffset = -Math.floor(Math.random() * 10) - 2;
+              col.stepInterval = Math.random() * 80 + 45;
+              col.snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+              col.trailLength = Math.floor(Math.random() * 12) + 8;
+            }
+          }
+
+          // Draw the characters in the trail
+          for (let j = 0; j < col.trailLength; j++) {
+            const r = col.rowOffset - j;
+            const charY = r * fontSize;
+            
+            if (charY > -fontSize && charY < height) {
+              const charIndex = r % col.snippet.length;
+              const safeIndex = charIndex >= 0 ? charIndex : (col.snippet.length + (charIndex % col.snippet.length)) % col.snippet.length;
+              const char = col.snippet[safeIndex];
+              
+              const fraction = j / col.trailLength;
+              const opacity = (1 - fraction) * 0.85; // Slightly increased trail visibility
+              
+              if (j === 0) {
+                // Bright white/cyan for the head character
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.95})`;
+              } else {
+                // Beautiful cyan color for the trail
+                ctx.fillStyle = `rgba(34, 211, 238, ${opacity})`;
+              }
+              
+              ctx.fillText(char, col.x, charY);
+            }
+          }
+        }
+      }
+
+      if (devCodingCanvas) {
+        devCodingCanvas.width = canvasWidth;
+        devCodingCanvas.height = canvasHeight;
+        initColumns(canvasWidth, canvasHeight);
+      }
+
       // --- 1. Animation Loop ---
       function animate() {
+        const now = performance.now();
+
         if (!isMouseOver) {
           targetX = window.innerWidth / 2;
           targetY = window.innerHeight / 2;
@@ -407,6 +527,15 @@ const currentUrl = Astro.url;
         // Lerp for smooth motion
         currentX += (targetX - currentX) * lerpFactor;
         currentY += (targetY - currentY) * lerpFactor;
+
+        // Auto-resize canvas buffer if container size changed
+        if (devCodingCanvas && (devCodingCanvas.width !== devCodingCanvas.clientWidth || devCodingCanvas.height !== devCodingCanvas.clientHeight)) {
+          canvasWidth = devCodingCanvas.clientWidth || window.innerWidth || 800;
+          canvasHeight = devCodingCanvas.clientHeight || window.innerHeight || 600;
+          devCodingCanvas.width = canvasWidth;
+          devCodingCanvas.height = canvasHeight;
+          initColumns(canvasWidth, canvasHeight);
+        }
 
         // --- 2. Reveal Logic ---
         const clipPercentage = (currentX / window.innerWidth) * 100;
@@ -438,15 +567,27 @@ const currentUrl = Astro.url;
           devBg.style.setProperty('--tx', `${bgTx}px`);
           devBg.style.setProperty('--ty', `${bgTy}px`);
         }
+        if (devCodingCanvas) {
+          // Mid-range parallax intensity for the coding rain to create 3D depth
+          const codingTx = -ndcX * 18;
+          const codingTy = -ndcY * 18;
+          devCodingCanvas.style.setProperty('--tx', `${codingTx}px`);
+          devCodingCanvas.style.setProperty('--ty', `${codingTy}px`);
+        }
         if (devChar) {
           devChar.style.setProperty('--tx', `${charTx}px`);
           devChar.style.setProperty('--ty', `${charTy}px`);
+        }
+
+        // --- 4. Draw Canvas Animation ---
+        if (ctx && devCodingCanvas) {
+          drawCodingRain(ctx, canvasWidth, canvasHeight, now);
         }
         
         requestAnimationFrame(animate);
       }
       
-      // --- 4. Event Listeners ---
+      // --- 5. Event Listeners ---
       pageContainer.addEventListener('mousemove', (e: MouseEvent) => {
         targetX = e.clientX;
         targetY = e.clientY;
@@ -458,6 +599,16 @@ const currentUrl = Astro.url;
 
       pageContainer.addEventListener('mouseleave', () => {
         isMouseOver = false;
+      });
+
+      window.addEventListener('resize', () => {
+        canvasWidth = window.innerWidth;
+        canvasHeight = window.innerHeight;
+        if (devCodingCanvas) {
+          devCodingCanvas.width = canvasWidth;
+          devCodingCanvas.height = canvasHeight;
+          initColumns(canvasWidth, canvasHeight);
+        }
       });
 
       // Start the animation loop

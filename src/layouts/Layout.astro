@@ -10,10 +10,19 @@ import { cn } from '@/lib/utils'
 import Posthog from '@/components/Posthog.astro'
 import BackgroundAnimation from '@/components/BackgroundAnimation.astro'
 
+interface Props {
+  isWide?: boolean;
+  canonicalUrl?: string | URL;
+  background?: 'stars' | 'coding';
+}
+
 const {
   isWide = false,
-  canonicalUrl = SITE.href
+  canonicalUrl = SITE.href,
+  background = 'stars'
 } = Astro.props
+
+const canonicalUrlString = typeof canonicalUrl === 'string' ? canonicalUrl : canonicalUrl.toString()
 ---
 
 <!doctype html>
@@ -44,12 +53,12 @@ const {
         }
       })();
     </script>
-    <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrlString} />
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
     <Posthog />
   </Head>
   <body>
-    <BackgroundAnimation />
+    <BackgroundAnimation type={background} />
     <div class="flex h-fit min-h-screen w-full flex-col gap-y-4 sm:gap-y-6 font-sans">
       <Navbar client:load />
       <main class="flex grow flex-col bg-transparent mt-16 lg:mt-6" aria-label="Main content" role="main">

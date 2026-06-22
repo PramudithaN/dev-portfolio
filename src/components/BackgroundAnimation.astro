@@ -1,5 +1,11 @@
+---
+interface Props {
+  type?: 'stars' | 'coding';
+}
+const { type = 'stars' } = Astro.props;
+---
 <div class="fixed inset-0 -z-40 pointer-events-none overflow-hidden" aria-hidden="true">
-  <canvas id="bg-canvas" class="w-full h-full block"></canvas>
+  <canvas id="bg-canvas" class="w-full h-full block" data-type={type}></canvas>
 </div>
 
 <script>
@@ -21,6 +27,15 @@
     height: number = 0;
     isDark: boolean = false;
     observer: MutationObserver | null = null;
+    type: 'stars' | 'coding' = 'stars';
+    columns: Array<{
+      x: number;
+      rowOffset: number;
+      stepInterval: number;
+      lastStepTime: number;
+      snippet: string;
+      trailLength: number;
+    }> = [];
 
     constructor() {
       this.canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
@@ -57,14 +72,66 @@
     }
 
     init() {
+      this.type = (this.canvas.dataset.type as 'stars' | 'coding') || 'stars';
       this.canvas.width = this.width;
       this.canvas.height = this.height;
-      this.particles = [];
-      
-      const particleCount = this.isDark ? 55 : 30; // Subtle density
+      if (this.type === 'coding') {
+        this.initCoding();
+      } else {
+        this.initStars();
+      }
+    }
 
+    initStars() {
+      this.particles = [];
+      const particleCount = this.isDark ? 55 : 30; // Subtle density
       for (let i = 0; i < particleCount; i++) {
         this.particles.push(this.createParticle());
+      }
+    }
+
+    initCoding() {
+      this.columns = [];
+      const spacing = 18; // Spacing between columns
+      const fontSize = 12; // Font size for coding text
+      const colCount = Math.ceil(this.width / spacing);
+
+      const codeSnippets = [
+        "const price = await predictPrice(model, data);",
+        "import { LSTM, Dense } from '@/components/deep-learning';",
+        "tf.layers.lstm({ units: 128, returnSequences: true })",
+        "const loss = tf.losses.meanSquaredError(labels, predictions);",
+        "model.fit(xTrain, yTrain, { epochs: 200, batchSize: 32 });",
+        "export default async function trainModel(dataset) {",
+        "const attention = selfAttention(query, key, value);",
+        "return tf.tidy(() => { const y = model.predict(x); });",
+        "const shapValues = explainModel(lstmModel, inputData);",
+        "const currentTheme = document.documentElement.classList.contains('dark');",
+        "function explainPredictions(shapValues) { return shapValues.map(v => v.abs()); }",
+        "const nextPrice = lstmCell.forward(inputFeature);",
+        "const optimizer = tf.train.adam(learningRate);",
+        "const [state, dispatch] = useReducer(reducer, initialState);",
+        "export const getStaticProps: GetStaticProps = async (context) => {",
+        "useEffect(() => { const sub = api.subscribe(); return () => sub.unsubscribe(); }, []);",
+        "interface User { id: string; name: string; role: 'admin' | 'user'; }",
+        "const response = await fetch(`/api/v1/users/${id}`);",
+        "export default function App({ Component, pageProps }) {",
+        "const queryClient = new QueryClient();",
+        "const filtered = items.filter(item => item.active);"
+      ];
+
+      for (let i = 0; i < colCount; i++) {
+        const snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+        const trailLength = Math.floor(Math.random() * 8) + 6; // 6 to 14 characters
+
+        this.columns.push({
+          x: i * spacing,
+          rowOffset: Math.floor(Math.random() * (this.height / fontSize + 10)) - 10,
+          stepInterval: Math.random() * 150 + 100, // 100ms to 250ms per step
+          lastStepTime: performance.now() - Math.random() * 1000,
+          snippet,
+          trailLength
+        });
       }
     }
 
@@ -88,14 +155,71 @@
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
-      this.canvas.width = this.width;
-      this.canvas.height = this.height;
+      this.init();
     }
 
     animate() {
       this.ctx.clearRect(0, 0, this.width, this.height);
-      this.draw();
+      if (this.type === 'coding') {
+        this.drawCoding(performance.now());
+      } else {
+        this.draw();
+      }
       this.animationFrameId = requestAnimationFrame(this.animate.bind(this));
+    }
+
+    drawCoding(now: number) {
+      this.ctx.font = '12px "Space Mono", "Courier New", monospace';
+      this.ctx.textBaseline = 'top';
+      const fontSize = 12;
+      const totalRows = Math.ceil(this.height / fontSize);
+      const isDarkTheme = this.isDark;
+
+      for (let i = 0; i < this.columns.length; i++) {
+        const col = this.columns[i];
+
+        // Update row position based on stepInterval
+        if (now - col.lastStepTime > col.stepInterval) {
+          col.rowOffset++;
+          col.lastStepTime = now;
+
+          // If the trail has fully moved off screen, reset the column
+          if (col.rowOffset - col.trailLength > totalRows) {
+            col.rowOffset = -Math.floor(Math.random() * 10) - 2;
+            col.stepInterval = Math.random() * 150 + 100;
+            col.trailLength = Math.floor(Math.random() * 8) + 6;
+          }
+        }
+
+        // Draw the characters in the trail
+        for (let j = 0; j < col.trailLength; j++) {
+          const r = col.rowOffset - j;
+          const charY = r * fontSize;
+
+          if (charY > -fontSize && charY < this.height) {
+            const charIndex = r % col.snippet.length;
+            const safeIndex = charIndex >= 0 ? charIndex : (col.snippet.length + (charIndex % col.snippet.length)) % col.snippet.length;
+            const char = col.snippet[safeIndex];
+
+            const fraction = j / col.trailLength;
+            const opacity = (1 - fraction) * (isDarkTheme ? 0.08 : 0.09);
+
+            if (j === 0) {
+              // Head character: subtle highlight
+              this.ctx.fillStyle = isDarkTheme 
+                ? `rgba(165, 243, 252, ${opacity * 1.5})` 
+                : `rgba(15, 23, 42, ${opacity * 1.6})`;
+            } else {
+              // Trail character: fading
+              this.ctx.fillStyle = isDarkTheme 
+                ? `rgba(34, 211, 238, ${opacity})` 
+                : `rgba(59, 130, 246, ${opacity})`;
+            }
+
+            this.ctx.fillText(char, col.x, charY);
+          }
+        }
+      }
     }
 
     draw() {
